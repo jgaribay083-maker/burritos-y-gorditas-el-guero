@@ -1,0 +1,26 @@
+FOTOS PARA LA PÁGINA — Burritos y Gorditas el Güero
+=====================================================
+
+Pon aquí las fotos con EXACTAMENTE estos nombres (en minúsculas, .jpg).
+La página las toma solas. Mientras no estén, se ven tarjetas bonitas con emoji.
+
+PRINCIPALES (las más importantes):
+  hero.jpg        -> Foto de fondo del encabezado (el puesto, el comal o un burrito apetitoso). Horizontal, grande.
+  burritos.jpg    -> Un burrito de harina apetitoso (close-up).
+  gorditas.jpg    -> Gorditas recién hechas en el comal.
+  barbacoa.jpg    -> Barbacoa / tacos de barbacoa.
+  tortas.jpg      -> Una torta.
+
+GALERÍA (ambiente, comal, manos haciendo tortillas):
+  foto1.jpg  foto2.jpg  foto3.jpg  foto4.jpg  foto5.jpg  foto6.jpg
+
+FAMOSOS (si tienes las fotos de cuando los visitaron):
+  famoso-carlos.jpg    -> Carlos Bonavides en el negocio
+  famoso-vanessa.jpg   -> Vanessa Guzmán Niebla en el negocio
+
+CONSEJOS:
+- Que se vean apetitosas y con buena luz (de día, cerca de la ventana).
+- Cuadradas o horizontales está bien; el sitio las recorta solo.
+- No importa si pesan; mejor si son nítidas.
+
+Cuando las tengas, mándamelas o ponlas en esta carpeta y yo las dejo listas.

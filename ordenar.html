@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ordenar · Burritos y Gorditas el Güero</title>
+<style>
+  /* ===== Paleta del negocio ===== */
+  :root{
+    --rojo:#BE2C2C;
+    --rojo-osc:#9a2020;
+    --amarillo:#F4A81D;
+    --crema:#faf6ec;
+    --tinta:#241a16;
+    --tinta-suave:#6b5d54;
+    --linea:#e7ddca;
+    --verde:#1f7a45;
+    --verde-claro:#e7f4ec;
+    --sombra:0 2px 0 rgba(0,0,0,.04), 0 8px 24px -12px rgba(40,20,10,.35);
+    --radio:14px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    font-family:ui-rounded,"Segoe UI",-apple-system,BlinkMacSystemFont,sans-serif;
+    background:var(--crema);
+    color:var(--tinta);
+    line-height:1.45;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:120px;
+  }
+  .wrap{max-width:520px;margin:0 auto;padding:0 16px}
+
+  /* ===== Encabezado ===== */
+  header{
+    background:
+      radial-gradient(120% 120% at 50% -10%, var(--rojo) 0%, var(--rojo-osc) 100%);
+    color:#fff;text-align:center;padding:26px 16px 22px;
+    border-bottom:5px solid var(--amarillo);
+  }
+  .logo{
+    width:64px;height:64px;border-radius:50%;
+    background:var(--amarillo);color:var(--rojo);
+    display:flex;align-items:center;justify-content:center;
+    font:800 34px/1 Georgia,serif;margin:0 auto 10px;
+    box-shadow:0 4px 0 rgba(0,0,0,.15);
+  }
+  header h1{font-size:21px;letter-spacing:.2px}
+  header p{font-size:13.5px;opacity:.92;margin-top:3px}
+  .aviso{
+    display:inline-block;margin-top:12px;font-size:12.5px;
+    background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);
+    padding:6px 12px;border-radius:999px;
+  }
+
+  /* ===== Secciones del menú ===== */
+  .seccion{margin-top:24px}
+  .seccion h2{
+    font-size:13px;text-transform:uppercase;letter-spacing:1.5px;
+    color:var(--rojo);font-weight:800;margin-bottom:2px;
+    display:flex;align-items:center;gap:8px;
+  }
+  .seccion h2::after{content:"";flex:1;height:2px;background:var(--linea);border-radius:2px}
+
+  .item{
+    display:flex;align-items:center;gap:12px;
+    background:#fff;border:1px solid var(--linea);border-radius:var(--radio);
+    padding:12px 12px 12px 14px;margin-top:10px;box-shadow:var(--sombra);
+  }
+  .item-info{flex:1;min-width:0}
+  .item-info .nom{font-weight:700;font-size:15.5px}
+  .item-info .des{font-size:12.5px;color:var(--tinta-suave);margin-top:1px}
+  .item-info .pre{font-weight:800;color:var(--rojo);margin-top:3px;font-size:14px}
+
+  .stepper{display:flex;align-items:center;gap:0;flex:none}
+  .stepper button{
+    width:34px;height:34px;border:none;border-radius:10px;
+    background:var(--crema);color:var(--rojo);font-size:20px;font-weight:700;
+    cursor:pointer;display:flex;align-items:center;justify-content:center;
+    border:1px solid var(--linea);
+  }
+  .stepper button:active{transform:scale(.92)}
+  .stepper .add{background:var(--rojo);color:#fff;border-color:var(--rojo)}
+  .stepper .cnt{min-width:30px;text-align:center;font-weight:800;font-size:15px}
+  .stepper .cnt.cero{color:var(--linea)}
+
+  /* ===== Barra carrito fija ===== */
+  .barra{
+    position:fixed;left:0;right:0;bottom:0;z-index:50;
+    padding:12px 16px calc(12px + env(safe-area-inset-bottom));
+    background:linear-gradient(180deg, rgba(250,246,236,0) 0%, var(--crema) 22%);
+  }
+  .barra-in{max-width:520px;margin:0 auto}
+  .btn{
+    width:100%;border:none;border-radius:14px;cursor:pointer;
+    font-size:16.5px;font-weight:800;padding:16px;
+    display:flex;align-items:center;justify-content:center;gap:10px;
+    box-shadow:0 6px 16px -6px rgba(190,44,44,.6);
+  }
+  .btn-rojo{background:var(--rojo);color:#fff}
+  .btn-rojo:disabled{background:#d9c9c9;box-shadow:none;cursor:not-allowed;color:#fff}
+  .btn-verde{background:var(--verde);color:#fff;box-shadow:0 6px 16px -6px rgba(31,122,69,.6)}
+  .btn-amar{background:var(--amarillo);color:#3a2a08}
+  .btn-fant{background:#fff;color:var(--tinta);border:1.5px solid var(--linea);box-shadow:none}
+  .btn .pill{background:rgba(255,255,255,.22);padding:2px 9px;border-radius:999px;font-size:14px}
+  .btn:active{transform:translateY(1px)}
+
+  /* ===== Hoja modal (carrito / pago) ===== */
+  .overlay{
+    position:fixed;inset:0;z-index:100;background:rgba(36,26,22,.5);
+    display:none;align-items:flex-end;justify-content:center;
+    backdrop-filter:blur(2px);
+  }
+  .overlay.on{display:flex}
+  .hoja{
+    background:var(--crema);width:100%;max-width:520px;
+    border-radius:22px 22px 0 0;padding:8px 16px calc(20px + env(safe-area-inset-bottom));
+    max-height:92vh;overflow-y:auto;animation:sube .25s ease;
+  }
+  @keyframes sube{from{transform:translateY(40px);opacity:.6}to{transform:none;opacity:1}}
+  .grip{width:44px;height:5px;background:var(--linea);border-radius:999px;margin:8px auto 14px}
+  .hoja h3{font-size:19px;margin-bottom:4px}
+  .hoja .sub{font-size:13px;color:var(--tinta-suave);margin-bottom:14px}
+
+  .linea-pedido{display:flex;justify-content:space-between;gap:12px;font-size:14.5px;padding:9px 0;border-bottom:1px dashed var(--linea)}
+  .linea-pedido .q{color:var(--rojo);font-weight:800}
+  .total-row{display:flex;justify-content:space-between;align-items:baseline;margin:14px 0 4px;font-size:15px}
+  .total-row .big{font-size:26px;font-weight:800;color:var(--rojo)}
+
+  label.campo{display:block;margin-top:14px;font-size:13px;font-weight:700;color:var(--tinta-suave)}
+  .campo input{
+    width:100%;margin-top:6px;padding:13px 14px;font-size:16px;
+    border:1.5px solid var(--linea);border-radius:12px;background:#fff;color:var(--tinta);
+  }
+  .campo input:focus{outline:none;border-color:var(--rojo)}
+
+  .candado{
+    background:var(--verde-claro);border:1px solid #bfe3cc;color:#15532f;
+    border-radius:12px;padding:13px 14px;font-size:13.5px;margin-top:16px;display:flex;gap:10px;
+  }
+  .candado b{display:block}
+  .check{
+    display:flex;gap:11px;align-items:flex-start;margin-top:16px;
+    background:#fff;border:1.5px solid var(--linea);border-radius:12px;padding:13px;cursor:pointer;
+  }
+  .check input{width:22px;height:22px;accent-color:var(--verde);margin-top:1px;flex:none}
+  .check span{font-size:14px}
+  .mini{font-size:12px;color:var(--tinta-suave);text-align:center;margin-top:14px;line-height:1.5}
+  .pasos{display:flex;gap:6px;margin:2px 0 16px}
+  .pasos i{flex:1;height:4px;border-radius:4px;background:var(--linea)}
+  .pasos i.on{background:var(--amarillo)}
+
+  .vacio{text-align:center;color:var(--tinta-suave);padding:30px 0;font-size:14px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">G</div>
+  <h1>Burritos y Gorditas el Güero</h1>
+  <p>Ordena, paga y pasa por tu comida 🌮</p>
+  <div class="aviso">⏱️ Tu pedido se prepara apenas confirmamos tu pago</div>
+</header>
+
+<main class="wrap" id="menu"><!-- el menú se pinta con JS --></main>
+
+<!-- Barra inferior: ver carrito -->
+<div class="barra" id="barra" style="display:none">
+  <div class="barra-in">
+    <button class="btn btn-rojo" id="verCarrito">
+      <span>Ver mi pedido</span>
+      <span class="pill" id="pillCount">0</span>
+      <span style="margin-left:auto" id="pillTotal">$0</span>
+    </button>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="overlay" id="overlay">
+  <div class="hoja" id="hoja"><!-- contenido dinámico --></div>
+</div>
+
+<script>
+/* ====================================================================
+   CONFIGURACIÓN — cambia solo estos 3 valores cuando tengas los reales
+   ==================================================================== */
+const CONFIG = {
+  // Número de WhatsApp de TU HERMANA (a donde llega la comanda).
+  // Formato: 52 + 10 dígitos, sin espacios ni signos. Ej: 526367000081
+  whatsappComanda: "526367000081",          // ← PLACEHOLDER (cámbialo)
+
+  // Link de pago de Mercado Pago / Clip. Mientras esté vacío, se muestra
+  // un aviso. Pega aquí tu "link de cobro". Ej: "https://mpago.la/xxxxx"
+  linkPago: "",                              // ← PLACEHOLDER (pégalo)
+
+  negocio: "Burritos y Gorditas el Güero",
+  moneda: "$",
+};
+
+/* ====================================================================
+   MENÚ — edita libremente (nombre, descripción y precio en pesos)
+   ==================================================================== */
+const MENU = [
+  { grupo:"🌯 Burritos", items:[
+    { id:"b1", nom:"Burrito de Asada",         des:"Carne asada, frijoles y salsa",      pre:65 },
+    { id:"b2", nom:"Burrito de Deshebrada",    des:"Res deshebrada en su jugo",          pre:60 },
+    { id:"b3", nom:"Burrito de Chile Relleno", des:"Chile relleno con queso",            pre:55 },
+    { id:"b4", nom:"Burrito de Chicharrón",    des:"Chicharrón en salsa verde o roja",   pre:55 },
+    { id:"b5", nom:"Burrito de Frijol c/ Queso",des:"Frijoles refritos con queso",       pre:40 },
+  ]},
+  { grupo:"🫓 Gorditas", items:[
+    { id:"g1", nom:"Gordita de Picadillo",     des:"Picadillo con papa",                 pre:30 },
+    { id:"g2", nom:"Gordita de Chicharrón",    des:"Chicharrón prensado",                pre:30 },
+    { id:"g3", nom:"Gordita de Rajas c/ Queso",des:"Rajas poblanas con queso",           pre:30 },
+    { id:"g4", nom:"Gordita de Frijol c/ Queso",des:"Frijol con queso fundido",          pre:28 },
+  ]},
+  { grupo:"🥤 Bebidas", items:[
+    { id:"d1", nom:"Refresco",      des:"Lata o 600 ml",          pre:25 },
+    { id:"d2", nom:"Agua Fresca",   des:"Del día",                pre:25 },
+    { id:"d3", nom:"Botella de Agua",des:"600 ml",                pre:15 },
+  ]},
+];
+
+/* ==================================================================== */
+const carrito = {}; // id -> cantidad
+const $ = (s,el=document)=>el.querySelector(s);
+const money = n => CONFIG.moneda + n.toLocaleString("es-MX");
+const itemById = id => MENU.flatMap(g=>g.items).find(i=>i.id===id);
+
+/* ---- Pintar menú ---- */
+function pintarMenu(){
+  const cont = $("#menu");
+  cont.innerHTML = MENU.map(g=>`
+    <section class="seccion">
+      <h2>${g.grupo}</h2>
+      ${g.items.map(i=>`
+        <div class="item">
+          <div class="item-info">
+            <div class="nom">${i.nom}</div>
+            <div class="des">${i.des}</div>
+            <div class="pre">${money(i.pre)}</div>
+          </div>
+          <div class="stepper" data-id="${i.id}">
+            <button class="menos" aria-label="Quitar">–</button>
+            <span class="cnt cero">0</span>
+            <button class="add" aria-label="Agregar">+</button>
+          </div>
+        </div>`).join("")}
+    </section>`).join("");
+
+  cont.querySelectorAll(".stepper").forEach(st=>{
+    const id = st.dataset.id;
+    st.querySelector(".add").onclick   = ()=>cambia(id,+1);
+    st.querySelector(".menos").onclick = ()=>cambia(id,-1);
+  });
+}
+
+function cambia(id,d){
+  carrito[id] = Math.max(0,(carrito[id]||0)+d);
+  if(carrito[id]===0) delete carrito[id];
+  refrescar();
+}
+
+function totales(){
+  let n=0,t=0;
+  for(const id in carrito){ n+=carrito[id]; t+=carrito[id]*itemById(id).pre; }
+  return {n,t};
+}
+
+function refrescar(){
+  // contadores en cada item
+  document.querySelectorAll(".stepper").forEach(st=>{
+    const c = carrito[st.dataset.id]||0;
+    const el = st.querySelector(".cnt");
+    el.textContent = c;
+    el.classList.toggle("cero", c===0);
+  });
+  const {n,t} = totales();
+  $("#pillCount").textContent = n;
+  $("#pillTotal").textContent = money(t);
+  $("#barra").style.display = n>0 ? "block" : "none";
+}
+
+/* ---- Modal helpers ---- */
+const overlay = $("#overlay"), hoja = $("#hoja");
+function abrir(html){ hoja.innerHTML = html; overlay.classList.add("on"); hoja.scrollTop=0; }
+function cerrar(){ overlay.classList.remove("on"); }
+overlay.onclick = e=>{ if(e.target===overlay) cerrar(); };
+$("#verCarrito").onclick = pasoResumen;
+
+/* ---- PASO 1: resumen del pedido ---- */
+function pasoResumen(){
+  const {n,t}=totales();
+  if(n===0) return;
+  const lineas = Object.keys(carrito).map(id=>{
+    const it=itemById(id), c=carrito[id];
+    return `<div class="linea-pedido"><span><span class="q">${c}×</span> ${it.nom}</span><span>${money(it.pre*c)}</span></div>`;
+  }).join("");
+  abrir(`
+    <div class="grip"></div>
+    <div class="pasos"><i class="on"></i><i></i><i></i></div>
+    <h3>Tu pedido</h3>
+    <p class="sub">Revisa que esté completo antes de continuar.</p>
+    ${lineas}
+    <div class="total-row"><span>Total a pagar</span><span class="big">${money(t)}</span></div>
+    <button class="btn btn-rojo" style="margin-top:18px" id="aDatos">Continuar</button>
+    <button class="btn btn-fant" style="margin-top:10px" id="seguir">Seguir agregando</button>
+  `);
+  $("#aDatos").onclick = pasoDatos;
+  $("#seguir").onclick = cerrar;
+}
+
+/* ---- PASO 2: datos del cliente ---- */
+let datos = { nombre:"", tel:"", hora:"" };
+function pasoDatos(){
+  abrir(`
+    <div class="grip"></div>
+    <div class="pasos"><i class="on"></i><i class="on"></i><i></i></div>
+    <h3>¿Para quién es?</h3>
+    <p class="sub">Para tener tu pedido listo cuando pases por él.</p>
+    <label class="campo">Tu nombre
+      <input id="f_nombre" type="text" placeholder="Ej. Juan Pérez" value="${datos.nombre}">
+    </label>
+    <label class="campo">Tu teléfono
+      <input id="f_tel" type="tel" inputmode="numeric" placeholder="10 dígitos" value="${datos.tel}">
+    </label>
+    <label class="campo">¿A qué hora pasas? (aprox.)
+      <input id="f_hora" type="text" placeholder="Ej. 2:30 pm / en 20 min" value="${datos.hora}">
+    </label>
+    <button class="btn btn-rojo" style="margin-top:20px" id="aPago">Ir a pagar</button>
+  `);
+  $("#aPago").onclick = ()=>{
+    datos.nombre = $("#f_nombre").value.trim();
+    datos.tel    = $("#f_tel").value.trim();
+    datos.hora   = $("#f_hora").value.trim();
+    if(!datos.nombre || datos.tel.length<8){
+      alert("Pon tu nombre y un teléfono válido para continuar 🙂");
+      return;
+    }
+    pasoPago();
+  };
+}
+
+/* ---- PASO 3: pago anticipado (el candado anti-pérdida) ---- */
+function pasoPago(){
+  const {t}=totales();
+  const tienePago = CONFIG.linkPago && CONFIG.linkPago.length>5;
+  const bloquePago = tienePago
+    ? `<a class="btn btn-amar" style="margin-top:8px;text-decoration:none" href="${CONFIG.linkPago}" target="_blank" rel="noopener" id="irPagar">💳 Pagar ${money(t)} ahora</a>`
+    : `<div class="candado" style="background:#fff7e6;border-color:#f3dca0;color:#7a5a10">
+         <span>⚠️</span><div><b>Falta tu link de pago</b>Aún no pegaste el link de Mercado Pago/Clip en la configuración. Mientras, el cliente puede marcar el pago manual.</div>
+       </div>`;
+  abrir(`
+    <div class="grip"></div>
+    <div class="pasos"><i class="on"></i><i class="on"></i><i class="on"></i></div>
+    <h3>Paga por adelantado</h3>
+    <p class="sub">Pagas hoy, llegas y solo recoges. Sin filas, sin cambio.</p>
+
+    <div class="total-row"><span>Total</span><span class="big">${money(t)}</span></div>
+
+    <div class="candado">
+      <span>🔒</span>
+      <div><b>¿Por qué se paga antes?</b>
+      Apenas confirmamos tu pago, ${CONFIG.negocio} empieza a preparar tu comida fresca. Así siempre está lista a tu llegada.</div>
+    </div>
+
+    ${bloquePago}
+
+    <label class="check">
+      <input type="checkbox" id="yaPague">
+      <span><b>Ya realicé mi pago</b><br>Marca esta casilla cuando hayas pagado para poder enviar tu pedido.</span>
+    </label>
+
+    <button class="btn btn-verde" style="margin-top:16px" id="enviar" disabled>
+      Enviar pedido por WhatsApp
+    </button>
+    <p class="mini">Al enviar, tu comanda llega directo a la cocina con la nota de <b>PAGADO</b>.</p>
+  `);
+  const chk = $("#yaPague"), btn = $("#enviar");
+  chk.onchange = ()=> btn.disabled = !chk.checked;
+  btn.onclick = enviarWhatsApp;
+}
+
+/* ---- Construir y mandar la comanda a WhatsApp ---- */
+function enviarWhatsApp(){
+  const {n,t}=totales();
+  const folio = "G" + Date.now().toString().slice(-5);
+  const lineas = Object.keys(carrito).map(id=>{
+    const it=itemById(id), c=carrito[id];
+    return `• ${c}× ${it.nom} — ${money(it.pre*c)}`;
+  }).join("\n");
+
+  const msg =
+`🌮 *NUEVO PEDIDO — ${CONFIG.negocio}*
+Folio: ${folio}
+
+${lineas}
+
+*TOTAL: ${money(t)}*
+✅ *PAGADO* (verificar en la app de pago)
+
+👤 ${datos.nombre}
+📱 ${datos.tel}
+⏰ Pasa por él: ${datos.hora || "lo antes posible"}
+🏠 Para recoger`;
+
+  const url = `https://wa.me/${CONFIG.whatsappComanda}?text=${encodeURIComponent(msg)}`;
+  window.open(url,"_blank");
+  pasoGracias(folio);
+}
+
+function pasoGracias(folio){
+  abrir(`
+    <div class="grip"></div>
+    <div style="text-align:center;padding:14px 0 6px">
+      <div style="font-size:54px;line-height:1">🎉</div>
+      <h3 style="margin-top:8px">¡Pedido enviado!</h3>
+      <p class="sub" style="margin-top:6px">Tu folio es <b>${folio}</b>.<br>Apenas confirmemos tu pago lo empezamos a preparar.</p>
+      <button class="btn btn-rojo" style="margin-top:18px" id="nuevo">Hacer otro pedido</button>
+    </div>
+  `);
+  $("#nuevo").onclick = ()=>{
+    for(const k in carrito) delete carrito[k];
+    datos = {nombre:"",tel:"",hora:""};
+    refrescar(); cerrar();
+  };
+}
+
+/* ---- init ---- */
+pintarMenu();
+refrescar();
+</script>
+</body>
+</html>

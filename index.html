@@ -59,10 +59,14 @@
   /* ===== HERO ===== */
   .hero{position:relative;color:#fff;overflow:hidden;
     background:radial-gradient(120% 130% at 50% -10%, var(--rojo) 0%, var(--rojo-prof) 100%)}
-  .hero .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.30}
-  .hero::after{content:"";position:absolute;inset:0;
-    background:linear-gradient(180deg, rgba(94,18,18,.25) 0%, rgba(94,18,18,.55) 100%)}
-  .hero .wrap{position:relative;z-index:2;padding:46px 18px 52px;text-align:center}
+  .hero::after{content:"";position:absolute;inset:0;opacity:.07;pointer-events:none;
+    background-image:radial-gradient(circle at 18% 28%, #fff 1px, transparent 1.6px),
+                     radial-gradient(circle at 72% 64%, #fff 1px, transparent 1.6px);
+    background-size:28px 28px}
+  .hero .wrap{position:relative;z-index:2;padding:32px 18px 44px;text-align:center}
+  .hero .sign{width:100%;max-width:540px;margin:16px auto 2px;border-radius:16px;display:block;
+    border:5px solid rgba(255,255,255,.92);box-shadow:0 18px 44px -14px rgba(0,0,0,.6)}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
   .eyebrow{display:inline-block;font-size:12.5px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;
     color:var(--ambar-claro);background:rgba(0,0,0,.22);border:1px solid rgba(251,200,90,.4);
     padding:6px 14px;border-radius:999px}
@@ -204,10 +208,10 @@
 
 <!-- ===================== HERO ===================== -->
 <header class="hero">
-  <img class="bg" src="img/hero.jpg" alt="" onerror="this.remove()">
   <div class="wrap">
     <span class="eyebrow">🌵 Orgullo de Casas Grandes, Chihuahua</span>
-    <h1>Burritos y Gorditas<span class="sm">— el Güero —</span></h1>
+    <h1 class="sr-only">Burritos y Gorditas el Güero</h1>
+    <img class="sign" src="img/hero.jpg" alt="Letrero de Burritos y Gorditas el Güero">
     <p class="lema">La parada obligada rumbo a los pueblos o de regreso a Juárez. Tortillas hechas a mano al momento, sabor casero que vale el viaje.</p>
     <div class="stars">⭐ <b>4.4</b> · más de <b>420</b> clientes nos califican</div>
     <div class="cta-row">

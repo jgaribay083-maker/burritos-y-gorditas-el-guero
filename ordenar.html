@@ -61,6 +61,11 @@
     display:flex;align-items:center;gap:8px;
   }
   .seccion h2::after{content:"";flex:1;height:2px;background:var(--linea);border-radius:2px}
+  .seccion h2 em{
+    font-style:normal;font-weight:800;font-size:13px;letter-spacing:0;
+    color:#3a2a08;background:var(--amarillo);padding:2px 9px;border-radius:999px;
+  }
+  .grupo-nota{font-size:12px;color:var(--tinta-suave);margin:6px 0 -2px}
 
   .item{
     display:flex;align-items:center;gap:12px;
@@ -201,23 +206,46 @@ const CONFIG = {
    MENÚ — edita libremente (nombre, descripción y precio en pesos)
    ==================================================================== */
 const MENU = [
-  { grupo:"🌯 Burritos", items:[
-    { id:"b1", nom:"Burrito de Asada",         des:"Carne asada, frijoles y salsa",      pre:65 },
-    { id:"b2", nom:"Burrito de Deshebrada",    des:"Res deshebrada en su jugo",          pre:60 },
-    { id:"b3", nom:"Burrito de Chile Relleno", des:"Chile relleno con queso",            pre:55 },
-    { id:"b4", nom:"Burrito de Chicharrón",    des:"Chicharrón en salsa verde o roja",   pre:55 },
-    { id:"b5", nom:"Burrito de Frijol c/ Queso",des:"Frijoles refritos con queso",       pre:40 },
+  { grupo:"🌯 Burritos", precio:50, nota:"Elige tu guiso", items:[
+    { id:"b50_papa",  nom:"Papa",            pre:50 },
+    { id:"b50_verde", nom:"Verde",           pre:50 },
+    { id:"b50_rojo",  nom:"Rojo",            pre:50 },
+    { id:"b50_frij",  nom:"Frijoles",        pre:50 },
+    { id:"b50_pica",  nom:"Picadillo",       pre:50 },
+    { id:"b50_mole",  nom:"Mole",            pre:50 },
+    { id:"b50_chic",  nom:"Chicharrón",      pre:50 },
+    { id:"b50_raja",  nom:"Rajas con queso", pre:50 },
   ]},
-  { grupo:"🫓 Gorditas", items:[
-    { id:"g1", nom:"Gordita de Picadillo",     des:"Picadillo con papa",                 pre:30 },
-    { id:"g2", nom:"Gordita de Chicharrón",    des:"Chicharrón prensado",                pre:30 },
-    { id:"g3", nom:"Gordita de Rajas c/ Queso",des:"Rajas poblanas con queso",           pre:30 },
-    { id:"g4", nom:"Gordita de Frijol c/ Queso",des:"Frijol con queso fundido",          pre:28 },
+  { grupo:"🌯 Burritos", precio:60, nota:"Elige tu guiso", items:[
+    { id:"b60_rell",  nom:"Chile relleno",          pre:60 },
+    { id:"b60_asad",  nom:"Asado",                  pre:60 },
+    { id:"b60_bist",  nom:"Bistec con chile pasado",pre:60 },
+    { id:"b60_chpr",  nom:"Chicharrón prensado",    pre:60 },
+  ]},
+  { grupo:"🌯 Burrito de Barbacoa", precio:80, items:[
+    { id:"b_barb",    nom:"Barbacoa",        pre:80 },
+  ]},
+  { grupo:"🫓 Gorditas", precio:40, nota:"Elige tu guiso", items:[
+    { id:"g40_papa",  nom:"Papa",            pre:40 },
+    { id:"g40_verde", nom:"Verde",           pre:40 },
+    { id:"g40_rojo",  nom:"Rojo",            pre:40 },
+    { id:"g40_frij",  nom:"Frijoles",        pre:40 },
+    { id:"g40_pica",  nom:"Picadillo",       pre:40 },
+    { id:"g40_mole",  nom:"Mole",            pre:40 },
+    { id:"g40_chic",  nom:"Chicharrón",      pre:40 },
+    { id:"g40_raja",  nom:"Rajas con queso", pre:40 },
+  ]},
+  { grupo:"🫓 Gorditas", precio:50, nota:"Elige tu guiso", items:[
+    { id:"g50_rell",  nom:"Chile relleno",          pre:50 },
+    { id:"g50_asad",  nom:"Asado",                  pre:50 },
+    { id:"g50_bist",  nom:"Bistec con chile pasado",pre:50 },
+    { id:"g50_chpr",  nom:"Chicharrón prensado",    pre:50 },
+  ]},
+  { grupo:"🫓 Gordita de Barbacoa", precio:70, items:[
+    { id:"g_barb",    nom:"Barbacoa",        pre:70 },
   ]},
   { grupo:"🥤 Bebidas", items:[
-    { id:"d1", nom:"Refresco",      des:"Lata o 600 ml",          pre:25 },
-    { id:"d2", nom:"Agua Fresca",   des:"Del día",                pre:25 },
-    { id:"d3", nom:"Botella de Agua",des:"600 ml",                pre:15 },
+    { id:"refresco",  nom:"Refresco",  des:"Especifica el sabor al pedir (Coca, etc.)", pre:35, pideSabor:true },
   ]},
 ];
 
@@ -232,13 +260,14 @@ function pintarMenu(){
   const cont = $("#menu");
   cont.innerHTML = MENU.map(g=>`
     <section class="seccion">
-      <h2>${g.grupo}</h2>
+      <h2>${g.grupo}${g.precio?` <em>${money(g.precio)}</em>`:""}</h2>
+      ${g.nota?`<p class="grupo-nota">${g.nota}</p>`:""}
       ${g.items.map(i=>`
         <div class="item">
           <div class="item-info">
             <div class="nom">${i.nom}</div>
-            <div class="des">${i.des}</div>
-            <div class="pre">${money(i.pre)}</div>
+            ${i.des?`<div class="des">${i.des}</div>`:""}
+            ${g.precio?"":`<div class="pre">${money(i.pre)}</div>`}
           </div>
           <div class="stepper" data-id="${i.id}">
             <button class="menos" aria-label="Quitar">–</button>
@@ -311,8 +340,10 @@ function pasoResumen(){
 }
 
 /* ---- PASO 2: datos del cliente ---- */
-let datos = { nombre:"", tel:"", hora:"" };
+let datos = { nombre:"", tel:"", hora:"", refresco:"" };
+const pideRefresco = ()=> Object.keys(carrito).some(id=>itemById(id).pideSabor);
 function pasoDatos(){
+  const hayRefresco = pideRefresco();
   abrir(`
     <div class="grip"></div>
     <div class="pasos"><i class="on"></i><i class="on"></i><i></i></div>
@@ -327,14 +358,23 @@ function pasoDatos(){
     <label class="campo">¿A qué hora pasas? (aprox.)
       <input id="f_hora" type="text" placeholder="Ej. 2:30 pm / en 20 min" value="${datos.hora}">
     </label>
+    ${hayRefresco?`
+    <label class="campo">🥤 ¿Qué refresco(s)? — especifica el sabor
+      <input id="f_refresco" type="text" placeholder="Ej. Coca, Sprite, Fanta..." value="${datos.refresco}">
+    </label>`:""}
     <button class="btn btn-rojo" style="margin-top:20px" id="aPago">Ir a pagar</button>
   `);
   $("#aPago").onclick = ()=>{
     datos.nombre = $("#f_nombre").value.trim();
     datos.tel    = $("#f_tel").value.trim();
     datos.hora   = $("#f_hora").value.trim();
+    datos.refresco = hayRefresco ? $("#f_refresco").value.trim() : "";
     if(!datos.nombre || datos.tel.length<8){
       alert("Pon tu nombre y un teléfono válido para continuar 🙂");
+      return;
+    }
+    if(hayRefresco && !datos.refresco){
+      alert("Especifica el sabor del refresco (Coca, etc.) 🥤");
       return;
     }
     pasoPago();
@@ -398,7 +438,7 @@ ${lineas}
 
 *TOTAL: ${money(t)}*
 ✅ *PAGADO* (verificar en la app de pago)
-
+${datos.refresco?`\n🥤 Refresco(s): ${datos.refresco}`:""}
 👤 ${datos.nombre}
 📱 ${datos.tel}
 ⏰ Pasa por él: ${datos.hora || "lo antes posible"}

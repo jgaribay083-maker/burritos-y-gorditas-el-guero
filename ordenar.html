@@ -186,7 +186,7 @@ function optsFor(it){
   const g=[];
   if(esGordita) g.push({key:"masa",label:"¿De maíz o harina?",ch:[["harina","Harina"],["maiz","Maíz (+10 min)"]],def:"harina"});
   if(esBarbacoa) g.push({key:"cc",label:"Cebolla y cilantro",ch:[["con","Con"],["sin","Sin"]],def:"con"});
-  g.push({key:"salsa",label:"Salsa",ch:[["con","Con"],["sin","Sin"]],def:"con"});
+  g.push({key:"salsa",label:"Salsa",ch:[["sin","Sin"],["con","Con"]],def:"sin"});
   g.push({key:"asadero",label:"Asadero",ch:[["no","Sin"],["si","Con (+$"+CONFIG.asaderoExtra+")"]],def:"no"});
   return g;
 }

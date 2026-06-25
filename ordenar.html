@@ -5,432 +5,414 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Ordenar · Burritos y Gorditas el Güero</title>
 <style>
-  /* ===== Paleta del negocio ===== */
   :root{
-    --rojo:#BE2C2C;
-    --rojo-osc:#9a2020;
-    --amarillo:#F4A81D;
-    --crema:#faf6ec;
-    --tinta:#241a16;
-    --tinta-suave:#6b5d54;
-    --linea:#e7ddca;
-    --verde:#1f7a45;
-    --verde-claro:#e7f4ec;
+    --rojo:#be2c2c; --rojo-osc:#9a2020; --amarillo:#f4a81d; --amarillo-claro:#fbc85a;
+    --crema:#fff7e8; --crema-2:#fbf3e4; --blanco:#fffdf8;
+    --tinta:#2b1a12; --tinta-suave:#7a6a5e; --linea:#ebdcc0;
+    --verde:#1f7a45; --verde-claro:#e7f4ec; --wa:#25d366;
     --sombra:0 2px 0 rgba(0,0,0,.04), 0 8px 24px -12px rgba(40,20,10,.35);
     --radio:14px;
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{-webkit-text-size-adjust:100%}
-  body{
-    font-family:ui-rounded,"Segoe UI",-apple-system,BlinkMacSystemFont,sans-serif;
-    background:var(--crema);
-    color:var(--tinta);
-    line-height:1.45;
-    -webkit-font-smoothing:antialiased;
-    padding-bottom:120px;
-  }
-  .wrap{max-width:520px;margin:0 auto;padding:0 16px}
+  body{font-family:"Segoe UI",ui-rounded,-apple-system,BlinkMacSystemFont,sans-serif;
+    background:var(--crema);color:var(--tinta);line-height:1.45;-webkit-font-smoothing:antialiased;padding-bottom:120px}
+  .wrap{max-width:540px;margin:0 auto;padding:0 16px}
 
-  /* ===== Encabezado ===== */
-  header{
-    background:
-      radial-gradient(120% 120% at 50% -10%, var(--rojo) 0%, var(--rojo-osc) 100%);
-    color:#fff;text-align:center;padding:26px 16px 22px;
-    border-bottom:5px solid var(--amarillo);
-  }
-  .logo{
-    width:64px;height:64px;border-radius:50%;
-    background:var(--amarillo);color:var(--rojo);
-    display:flex;align-items:center;justify-content:center;
-    font:800 34px/1 Georgia,serif;margin:0 auto 10px;
-    box-shadow:0 4px 0 rgba(0,0,0,.15);
-  }
-  header h1{font-size:21px;letter-spacing:.2px}
-  header p{font-size:13.5px;opacity:.92;margin-top:3px}
-  .aviso{
-    display:inline-block;margin-top:12px;font-size:12.5px;
-    background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);
-    padding:6px 12px;border-radius:999px;
-  }
+  header{background:radial-gradient(120% 120% at 50% -10%, var(--rojo) 0%, var(--rojo-osc) 100%);
+    color:#fff;text-align:center;padding:18px 16px 22px;border-bottom:5px solid var(--amarillo);position:relative}
+  .volver{position:absolute;left:14px;top:16px;color:#fff;text-decoration:none;font-size:14px;font-weight:700;opacity:.9}
+  .logo{width:58px;height:58px;border-radius:50%;background:var(--amarillo);color:var(--rojo);
+    display:flex;align-items:center;justify-content:center;font:800 30px/1 Georgia,serif;margin:6px auto 9px;box-shadow:0 4px 0 rgba(0,0,0,.15)}
+  header h1{font-size:20px;font-family:Georgia,serif}
+  header p{font-size:13px;opacity:.92;margin-top:3px}
+  .aviso{display:inline-block;margin-top:11px;font-size:12.5px;background:rgba(255,255,255,.14);
+    border:1px solid rgba(255,255,255,.25);padding:6px 12px;border-radius:999px}
 
-  /* ===== Secciones del menú ===== */
-  .seccion{margin-top:24px}
-  .seccion h2{
-    font-size:13px;text-transform:uppercase;letter-spacing:1.5px;
-    color:var(--rojo);font-weight:800;margin-bottom:2px;
-    display:flex;align-items:center;gap:8px;
-  }
+  .seccion{margin-top:22px}
+  .seccion h2{font-size:13px;text-transform:uppercase;letter-spacing:1.5px;color:var(--rojo);font-weight:800;
+    margin-bottom:2px;display:flex;align-items:center;gap:8px}
+  .seccion h2 em{font-style:normal;font-weight:800;font-size:13px;color:#3a2400;background:var(--amarillo);padding:2px 9px;border-radius:999px}
   .seccion h2::after{content:"";flex:1;height:2px;background:var(--linea);border-radius:2px}
-  .seccion h2 em{
-    font-style:normal;font-weight:800;font-size:13px;letter-spacing:0;
-    color:#3a2a08;background:var(--amarillo);padding:2px 9px;border-radius:999px;
-  }
   .grupo-nota{font-size:12px;color:var(--tinta-suave);margin:6px 0 -2px}
 
-  .item{
-    display:flex;align-items:center;gap:12px;
-    background:#fff;border:1px solid var(--linea);border-radius:var(--radio);
-    padding:12px 12px 12px 14px;margin-top:10px;box-shadow:var(--sombra);
-  }
+  .item{display:flex;align-items:center;gap:12px;background:var(--blanco);border:1px solid var(--linea);
+    border-radius:var(--radio);padding:12px 12px 12px 14px;margin-top:10px;box-shadow:var(--sombra)}
   .item-info{flex:1;min-width:0}
   .item-info .nom{font-weight:700;font-size:15.5px}
   .item-info .des{font-size:12.5px;color:var(--tinta-suave);margin-top:1px}
   .item-info .pre{font-weight:800;color:var(--rojo);margin-top:3px;font-size:14px}
+  .item .badge{font-size:11px;font-weight:800;color:#fff;background:var(--verde);border-radius:999px;padding:2px 8px;margin-left:6px;display:none}
+  .item.en-carrito .badge{display:inline-block}
 
-  .stepper{display:flex;align-items:center;gap:0;flex:none}
-  .stepper button{
-    width:34px;height:34px;border:none;border-radius:10px;
-    background:var(--crema);color:var(--rojo);font-size:20px;font-weight:700;
-    cursor:pointer;display:flex;align-items:center;justify-content:center;
-    border:1px solid var(--linea);
-  }
-  .stepper button:active{transform:scale(.92)}
-  .stepper .add{background:var(--rojo);color:#fff;border-color:var(--rojo)}
-  .stepper .cnt{min-width:30px;text-align:center;font-weight:800;font-size:15px}
-  .stepper .cnt.cero{color:var(--linea)}
+  .add{flex:none;border:none;background:var(--rojo);color:#fff;font-weight:800;font-size:14px;
+    padding:11px 16px;border-radius:12px;cursor:pointer;display:flex;align-items:center;gap:6px;box-shadow:0 4px 10px -4px rgba(190,44,44,.6)}
+  .add:active{transform:translateY(1px)}
 
-  /* ===== Barra carrito fija ===== */
-  .barra{
-    position:fixed;left:0;right:0;bottom:0;z-index:50;
+  .barra{position:fixed;left:0;right:0;bottom:0;z-index:50;
     padding:12px 16px calc(12px + env(safe-area-inset-bottom));
-    background:linear-gradient(180deg, rgba(250,246,236,0) 0%, var(--crema) 22%);
-  }
-  .barra-in{max-width:520px;margin:0 auto}
-  .btn{
-    width:100%;border:none;border-radius:14px;cursor:pointer;
-    font-size:16.5px;font-weight:800;padding:16px;
-    display:flex;align-items:center;justify-content:center;gap:10px;
-    box-shadow:0 6px 16px -6px rgba(190,44,44,.6);
-  }
+    background:linear-gradient(180deg, rgba(255,247,232,0) 0%, var(--crema) 22%)}
+  .barra-in{max-width:540px;margin:0 auto}
+  .btn{width:100%;border:none;border-radius:14px;cursor:pointer;font-size:16.5px;font-weight:800;padding:16px;
+    display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 6px 16px -6px rgba(190,44,44,.6)}
   .btn-rojo{background:var(--rojo);color:#fff}
   .btn-rojo:disabled{background:#d9c9c9;box-shadow:none;cursor:not-allowed;color:#fff}
   .btn-verde{background:var(--verde);color:#fff;box-shadow:0 6px 16px -6px rgba(31,122,69,.6)}
-  .btn-amar{background:var(--amarillo);color:#3a2a08}
+  .btn-amar{background:var(--amarillo);color:#3a2400}
   .btn-fant{background:#fff;color:var(--tinta);border:1.5px solid var(--linea);box-shadow:none}
   .btn .pill{background:rgba(255,255,255,.22);padding:2px 9px;border-radius:999px;font-size:14px}
   .btn:active{transform:translateY(1px)}
 
-  /* ===== Hoja modal (carrito / pago) ===== */
-  .overlay{
-    position:fixed;inset:0;z-index:100;background:rgba(36,26,22,.5);
-    display:none;align-items:flex-end;justify-content:center;
-    backdrop-filter:blur(2px);
-  }
+  .overlay{position:fixed;inset:0;z-index:100;background:rgba(36,26,22,.5);display:none;align-items:flex-end;justify-content:center;backdrop-filter:blur(2px)}
   .overlay.on{display:flex}
-  .hoja{
-    background:var(--crema);width:100%;max-width:520px;
-    border-radius:22px 22px 0 0;padding:8px 16px calc(20px + env(safe-area-inset-bottom));
-    max-height:92vh;overflow-y:auto;animation:sube .25s ease;
-  }
+  .hoja{background:var(--crema);width:100%;max-width:540px;border-radius:22px 22px 0 0;
+    padding:8px 16px calc(20px + env(safe-area-inset-bottom));max-height:92vh;overflow-y:auto;animation:sube .25s ease}
   @keyframes sube{from{transform:translateY(40px);opacity:.6}to{transform:none;opacity:1}}
   .grip{width:44px;height:5px;background:var(--linea);border-radius:999px;margin:8px auto 14px}
-  .hoja h3{font-size:19px;margin-bottom:4px}
-  .hoja .sub{font-size:13px;color:var(--tinta-suave);margin-bottom:14px}
+  .hoja h3{font-size:19px;margin-bottom:2px;font-family:Georgia,serif}
+  .hoja .sub{font-size:13px;color:var(--tinta-suave);margin-bottom:8px}
 
-  .linea-pedido{display:flex;justify-content:space-between;gap:12px;font-size:14.5px;padding:9px 0;border-bottom:1px dashed var(--linea)}
-  .linea-pedido .q{color:var(--rojo);font-weight:800}
-  .total-row{display:flex;justify-content:space-between;align-items:baseline;margin:14px 0 4px;font-size:15px}
+  /* opciones */
+  .optg{margin-top:15px}
+  .optg .ol{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:var(--tinta-suave);margin-bottom:7px}
+  .chips{display:flex;gap:8px;flex-wrap:wrap}
+  .chip{border:1.5px solid var(--linea);background:#fff;color:var(--tinta);border-radius:11px;padding:9px 14px;font-size:14px;font-weight:700;cursor:pointer}
+  .chip.sel{background:var(--rojo);color:#fff;border-color:var(--rojo)}
+  .qtyrow{display:flex;align-items:center;justify-content:space-between;margin-top:18px}
+  .qty{display:flex;align-items:center;gap:14px}
+  .qty button{width:40px;height:40px;border-radius:11px;border:1.5px solid var(--linea);background:#fff;color:var(--rojo);font-size:22px;font-weight:800;cursor:pointer}
+  .qty .n{font-size:18px;font-weight:800;min-width:24px;text-align:center}
+
+  .linea{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px dashed var(--linea)}
+  .linea .lz{flex:1;min-width:0}
+  .linea .nm{font-weight:700;font-size:14.5px}
+  .linea .op{font-size:12px;color:var(--tinta-suave);margin-top:2px}
+  .linea .ctrl{display:flex;align-items:center;gap:9px;margin-top:6px}
+  .linea .ctrl button{width:28px;height:28px;border-radius:8px;border:1px solid var(--linea);background:#fff;color:var(--rojo);font-weight:800;cursor:pointer}
+  .linea .ctrl .c{font-weight:800;min-width:18px;text-align:center}
+  .linea .pr{font-weight:800;color:var(--rojo);white-space:nowrap}
+  .total-row{display:flex;justify-content:space-between;align-items:baseline;margin:15px 0 4px;font-size:15px}
   .total-row .big{font-size:26px;font-weight:800;color:var(--rojo)}
 
   label.campo{display:block;margin-top:14px;font-size:13px;font-weight:700;color:var(--tinta-suave)}
-  .campo input{
-    width:100%;margin-top:6px;padding:13px 14px;font-size:16px;
-    border:1.5px solid var(--linea);border-radius:12px;background:#fff;color:var(--tinta);
-  }
+  .campo input{width:100%;margin-top:6px;padding:13px 14px;font-size:16px;border:1.5px solid var(--linea);border-radius:12px;background:#fff;color:var(--tinta)}
   .campo input:focus{outline:none;border-color:var(--rojo)}
+  .tiempo{background:#fff7e6;border:1px solid #f3dca0;color:#7a5a10;border-radius:12px;padding:12px 14px;font-size:13.5px;margin-top:14px;display:flex;gap:9px}
+  .tiempo b{display:block}
 
-  .candado{
-    background:var(--verde-claro);border:1px solid #bfe3cc;color:#15532f;
-    border-radius:12px;padding:13px 14px;font-size:13.5px;margin-top:16px;display:flex;gap:10px;
-  }
+  .candado{background:var(--verde-claro);border:1px solid #bfe3cc;color:#15532f;border-radius:12px;padding:13px 14px;font-size:13.5px;margin-top:16px;display:flex;gap:10px}
   .candado b{display:block}
-  .check{
-    display:flex;gap:11px;align-items:flex-start;margin-top:16px;
-    background:#fff;border:1.5px solid var(--linea);border-radius:12px;padding:13px;cursor:pointer;
-  }
+  .check{display:flex;gap:11px;align-items:flex-start;margin-top:16px;background:#fff;border:1.5px solid var(--linea);border-radius:12px;padding:13px;cursor:pointer}
   .check input{width:22px;height:22px;accent-color:var(--verde);margin-top:1px;flex:none}
   .check span{font-size:14px}
   .mini{font-size:12px;color:var(--tinta-suave);text-align:center;margin-top:14px;line-height:1.5}
-  .pasos{display:flex;gap:6px;margin:2px 0 16px}
+  .pasos{display:flex;gap:6px;margin:2px 0 14px}
   .pasos i{flex:1;height:4px;border-radius:4px;background:var(--linea)}
   .pasos i.on{background:var(--amarillo)}
-
-  .vacio{text-align:center;color:var(--tinta-suave);padding:30px 0;font-size:14px}
 </style>
 </head>
 <body>
 
 <header>
+  <a class="volver" href="index.html">← Volver</a>
   <div class="logo">G</div>
-  <h1>Burritos y Gorditas el Güero</h1>
-  <p>Ordena, paga y pasa por tu comida 🌮</p>
-  <div class="aviso">⏱️ Tu pedido se prepara apenas confirmamos tu pago</div>
+  <h1>Ordena en línea</h1>
+  <p>Arma tu pedido, paga y pásalo a recoger 🌮</p>
+  <div class="aviso">⏱️ Pedidos con mínimo 20 min (30 min gorditas de maíz)</div>
 </header>
 
-<main class="wrap" id="menu"><!-- el menú se pinta con JS --></main>
+<main class="wrap" id="menu"></main>
 
-<!-- Barra inferior: ver carrito -->
 <div class="barra" id="barra" style="display:none">
   <div class="barra-in">
     <button class="btn btn-rojo" id="verCarrito">
-      <span>Ver mi pedido</span>
-      <span class="pill" id="pillCount">0</span>
+      <span>Ver mi pedido</span><span class="pill" id="pillCount">0</span>
       <span style="margin-left:auto" id="pillTotal">$0</span>
     </button>
   </div>
 </div>
 
-<!-- Modal -->
-<div class="overlay" id="overlay">
-  <div class="hoja" id="hoja"><!-- contenido dinámico --></div>
-</div>
+<div class="overlay" id="overlay"><div class="hoja" id="hoja"></div></div>
 
 <script>
-/* ====================================================================
-   CONFIGURACIÓN — cambia solo estos 3 valores cuando tengas los reales
-   ==================================================================== */
+/* ===== CONFIG (cambia solo esto) ===== */
 const CONFIG = {
-  // Número de WhatsApp de TU HERMANA (a donde llega la comanda).
-  // Formato: 52 + 10 dígitos, sin espacios ni signos. Ej: 526367000081
-  whatsappComanda: "526367000081",          // ← PLACEHOLDER (cámbialo)
-
-  // Link de pago de Mercado Pago / Clip. Mientras esté vacío, se muestra
-  // un aviso. Pega aquí tu "link de cobro". Ej: "https://mpago.la/xxxxx"
-  linkPago: "",                              // ← PLACEHOLDER (pégalo)
-
+  whatsappComanda: "526367000081",   // WhatsApp de la hermana (comanda)
+  linkPago: "",                      // link de pago Mercado Pago/Clip
   negocio: "Burritos y Gorditas el Güero",
   moneda: "$",
+  asaderoExtra: 10,                  // se suma a los que lleven asadero
 };
 
-/* ====================================================================
-   MENÚ — edita libremente (nombre, descripción y precio en pesos)
-   ==================================================================== */
+/* ===== MENÚ ===== */
 const MENU = [
   { grupo:"🌯 Burritos", precio:50, nota:"Elige tu guiso", items:[
-    { id:"b50_papa",  nom:"Papa",            pre:50 },
-    { id:"b50_verde", nom:"Verde",           pre:50 },
-    { id:"b50_rojo",  nom:"Rojo",            pre:50 },
-    { id:"b50_frij",  nom:"Frijoles",        pre:50 },
-    { id:"b50_pica",  nom:"Picadillo",       pre:50 },
-    { id:"b50_mole",  nom:"Mole",            pre:50 },
-    { id:"b50_chic",  nom:"Chicharrón",      pre:50 },
-    { id:"b50_raja",  nom:"Rajas con queso", pre:50 },
+    {id:"b50_papa",nom:"Papa"},{id:"b50_verde",nom:"Verde"},{id:"b50_rojo",nom:"Rojo"},
+    {id:"b50_frij",nom:"Frijoles"},{id:"b50_pica",nom:"Picadillo"},{id:"b50_mole",nom:"Mole"},
+    {id:"b50_chic",nom:"Chicharrón"},{id:"b50_raja",nom:"Rajas con queso"},
   ]},
   { grupo:"🌯 Burritos", precio:60, nota:"Elige tu guiso", items:[
-    { id:"b60_rell",  nom:"Chile relleno",          pre:60 },
-    { id:"b60_asad",  nom:"Asado",                  pre:60 },
-    { id:"b60_bist",  nom:"Bistec con chile pasado",pre:60 },
-    { id:"b60_chpr",  nom:"Chicharrón prensado",    pre:60 },
+    {id:"b60_rell",nom:"Chile relleno"},{id:"b60_asad",nom:"Asado"},
+    {id:"b60_bist",nom:"Bistec con chile pasado"},{id:"b60_chpr",nom:"Chicharrón prensado"},
   ]},
-  { grupo:"🌯 Burrito de Barbacoa", precio:80, items:[
-    { id:"b_barb",    nom:"Barbacoa",        pre:80 },
-  ]},
+  { grupo:"🌯 Burrito de Barbacoa", precio:80, items:[ {id:"b_barb",nom:"Barbacoa de labio"} ]},
   { grupo:"🫓 Gorditas", precio:40, nota:"Elige tu guiso", items:[
-    { id:"g40_papa",  nom:"Papa",            pre:40 },
-    { id:"g40_verde", nom:"Verde",           pre:40 },
-    { id:"g40_rojo",  nom:"Rojo",            pre:40 },
-    { id:"g40_frij",  nom:"Frijoles",        pre:40 },
-    { id:"g40_pica",  nom:"Picadillo",       pre:40 },
-    { id:"g40_mole",  nom:"Mole",            pre:40 },
-    { id:"g40_chic",  nom:"Chicharrón",      pre:40 },
-    { id:"g40_raja",  nom:"Rajas con queso", pre:40 },
+    {id:"g40_papa",nom:"Papa"},{id:"g40_verde",nom:"Verde"},{id:"g40_rojo",nom:"Rojo"},
+    {id:"g40_frij",nom:"Frijoles"},{id:"g40_pica",nom:"Picadillo"},{id:"g40_mole",nom:"Mole"},
+    {id:"g40_chic",nom:"Chicharrón"},{id:"g40_raja",nom:"Rajas con queso"},
   ]},
   { grupo:"🫓 Gorditas", precio:50, nota:"Elige tu guiso", items:[
-    { id:"g50_rell",  nom:"Chile relleno",          pre:50 },
-    { id:"g50_asad",  nom:"Asado",                  pre:50 },
-    { id:"g50_bist",  nom:"Bistec con chile pasado",pre:50 },
-    { id:"g50_chpr",  nom:"Chicharrón prensado",    pre:50 },
+    {id:"g50_rell",nom:"Chile relleno"},{id:"g50_asad",nom:"Asado"},
+    {id:"g50_bist",nom:"Bistec con chile pasado"},{id:"g50_chpr",nom:"Chicharrón prensado"},
   ]},
-  { grupo:"🫓 Gordita de Barbacoa", precio:70, items:[
-    { id:"g_barb",    nom:"Barbacoa",        pre:70 },
-  ]},
+  { grupo:"🫓 Gordita de Barbacoa", precio:70, items:[ {id:"g_barb",nom:"Barbacoa de labio"} ]},
   { grupo:"🥤 Bebidas", items:[
-    { id:"refresco",  nom:"Refresco",  des:"Especifica el sabor al pedir (Coca, etc.)", pre:35, pideSabor:true },
+    {id:"refresco",nom:"Refresco",des:"Especifica el sabor al pedir (Coca, etc.)",pre:35,pideSabor:true},
   ]},
 ];
 
-/* ==================================================================== */
-const carrito = {}; // id -> cantidad
+/* ===== Aplanado con datos de grupo ===== */
+const ALL=[];
+MENU.forEach(g=>g.items.forEach(i=>{
+  ALL.push(Object.assign({_grupo:g.grupo, pre: (i.pre!==undefined?i.pre:g.precio)}, i));
+}));
+const baseItem = id => ALL.find(i=>i.id===id);
+
+/* ===== Opciones por platillo ===== */
+function optsFor(it){
+  if(it.pideSabor) return [];
+  const esGordita = it._grupo.indexOf("Gordita")>=0;
+  const esBarbacoa = /barbacoa/i.test(it.nom) || /Barbacoa/.test(it._grupo);
+  const g=[];
+  if(esGordita) g.push({key:"masa",label:"¿De maíz o harina?",ch:[["harina","Harina"],["maiz","Maíz (+10 min)"]],def:"harina"});
+  if(esBarbacoa) g.push({key:"cc",label:"Cebolla y cilantro",ch:[["con","Con"],["sin","Sin"]],def:"con"});
+  g.push({key:"salsa",label:"Salsa",ch:[["con","Con"],["sin","Sin"]],def:"con"});
+  g.push({key:"asadero",label:"Asadero",ch:[["no","Sin"],["si","Con (+$"+CONFIG.asaderoExtra+")"]],def:"no"});
+  return g;
+}
+function esGorditaMaiz(line){ const it=baseItem(line.id); return it._grupo.indexOf("Gordita")>=0 && line.opts.masa==="maiz"; }
+
+/* ===== Carrito (líneas con variantes) ===== */
+const carrito = {}; // lineKey -> {id, opts, precio, qty}
 const $ = (s,el=document)=>el.querySelector(s);
 const money = n => CONFIG.moneda + n.toLocaleString("es-MX");
-const itemById = id => MENU.flatMap(g=>g.items).find(i=>i.id===id);
+function lineKey(id,opts){ return id+"|"+["masa","cc","salsa","asadero"].map(k=>opts[k]||"").join(","); }
+function precioLinea(it,opts){ return it.pre + (opts.asadero==="si"?CONFIG.asaderoExtra:0); }
+function optsTexto(line){
+  const p=[];
+  if(line.opts.masa) p.push(line.opts.masa==="maiz"?"Maíz":"Harina");
+  if(line.opts.cc) p.push(line.opts.cc==="con"?"con cebolla/cilantro":"sin cebolla/cilantro");
+  if(line.opts.salsa) p.push(line.opts.salsa==="con"?"con salsa":"sin salsa");
+  if(line.opts.asadero) p.push(line.opts.asadero==="si"?"con asadero":"sin asadero");
+  return p.join(" · ");
+}
+function totales(){ let n=0,t=0; for(const k in carrito){n+=carrito[k].qty; t+=carrito[k].qty*carrito[k].precio;} return {n,t}; }
+function leadMin(){ for(const k in carrito){ if(esGorditaMaiz(carrito[k])) return 30; } return 20; }
 
-/* ---- Pintar menú ---- */
+/* ===== Pintar menú ===== */
 function pintarMenu(){
-  const cont = $("#menu");
+  const cont=$("#menu");
   cont.innerHTML = MENU.map(g=>`
     <section class="seccion">
       <h2>${g.grupo}${g.precio?` <em>${money(g.precio)}</em>`:""}</h2>
       ${g.nota?`<p class="grupo-nota">${g.nota}</p>`:""}
-      ${g.items.map(i=>`
-        <div class="item">
+      ${g.items.map(i=>{
+        const pre = (i.pre!==undefined?i.pre:g.precio);
+        return `<div class="item" data-id="${i.id}">
           <div class="item-info">
-            <div class="nom">${i.nom}</div>
+            <div class="nom">${i.nom}<span class="badge">en pedido</span></div>
             ${i.des?`<div class="des">${i.des}</div>`:""}
-            ${g.precio?"":`<div class="pre">${money(i.pre)}</div>`}
+            ${g.precio?"":`<div class="pre">${money(pre)}</div>`}
           </div>
-          <div class="stepper" data-id="${i.id}">
-            <button class="menos" aria-label="Quitar">–</button>
-            <span class="cnt cero">0</span>
-            <button class="add" aria-label="Agregar">+</button>
-          </div>
-        </div>`).join("")}
+          <button class="add" data-id="${i.id}">Agregar +</button>
+        </div>`;
+      }).join("")}
     </section>`).join("");
-
-  cont.querySelectorAll(".stepper").forEach(st=>{
-    const id = st.dataset.id;
-    st.querySelector(".add").onclick   = ()=>cambia(id,+1);
-    st.querySelector(".menos").onclick = ()=>cambia(id,-1);
-  });
+  cont.querySelectorAll(".add").forEach(b=> b.onclick=()=>openOpciones(b.dataset.id));
 }
 
-function cambia(id,d){
-  carrito[id] = Math.max(0,(carrito[id]||0)+d);
-  if(carrito[id]===0) delete carrito[id];
+const overlay=$("#overlay"), hoja=$("#hoja");
+function abrir(html){ hoja.innerHTML=html; overlay.classList.add("on"); hoja.scrollTop=0; }
+function cerrar(){ overlay.classList.remove("on"); }
+overlay.onclick=e=>{ if(e.target===overlay) cerrar(); };
+$("#verCarrito").onclick=pasoResumen;
+
+/* ===== Sheet de opciones al agregar ===== */
+let sel={}, selQty=1, selId=null;
+function openOpciones(id){
+  const it=baseItem(id); const groups=optsFor(it);
+  selId=id; selQty=1; sel={}; groups.forEach(gr=> sel[gr.key]=gr.def);
+  const gruposHtml = groups.map(gr=>`
+    <div class="optg" data-key="${gr.key}">
+      <div class="ol">${gr.label}</div>
+      <div class="chips">
+        ${gr.ch.map(([v,l])=>`<button class="chip${v===gr.def?" sel":""}" data-v="${v}">${l}</button>`).join("")}
+      </div>
+    </div>`).join("");
+  abrir(`
+    <div class="grip"></div>
+    <h3>${it.nom}</h3>
+    <p class="sub">${money(it.pre)}${optsFor(it).some(g=>g.key==="asadero")?" · asadero +$"+CONFIG.asaderoExtra:""}</p>
+    ${gruposHtml}
+    <div class="qtyrow">
+      <div class="qty">
+        <button id="qmenos">–</button><span class="n" id="qn">1</span><button id="qmas">+</button>
+      </div>
+      <div style="font-weight:800;color:var(--rojo)" id="opPrecio"></div>
+    </div>
+    <button class="btn btn-rojo" style="margin-top:18px" id="agregar">Agregar al pedido</button>
+  `);
+  hoja.querySelectorAll(".optg").forEach(og=>{
+    const key=og.dataset.key;
+    og.querySelectorAll(".chip").forEach(c=> c.onclick=()=>{
+      og.querySelectorAll(".chip").forEach(x=>x.classList.remove("sel"));
+      c.classList.add("sel"); sel[key]=c.dataset.v; pintaOpPrecio();
+    });
+  });
+  $("#qmenos").onclick=()=>{ selQty=Math.max(1,selQty-1); $("#qn").textContent=selQty; pintaOpPrecio(); };
+  $("#qmas").onclick=()=>{ selQty++; $("#qn").textContent=selQty; pintaOpPrecio(); };
+  $("#agregar").onclick=()=>{ addLinea(); cerrar(); };
+  pintaOpPrecio();
+}
+function pintaOpPrecio(){
+  const it=baseItem(selId); const pl=precioLinea(it,sel);
+  const el=$("#opPrecio"); if(el) el.textContent=money(pl*selQty);
+}
+function addLinea(){
+  const it=baseItem(selId); const opts=Object.assign({},sel);
+  const key=lineKey(selId,opts);
+  if(carrito[key]) carrito[key].qty+=selQty;
+  else carrito[key]={id:selId, opts:opts, precio:precioLinea(it,opts), qty:selQty};
   refrescar();
 }
-
-function totales(){
-  let n=0,t=0;
-  for(const id in carrito){ n+=carrito[id]; t+=carrito[id]*itemById(id).pre; }
-  return {n,t};
+function cambiaLinea(key,d){
+  if(!carrito[key])return;
+  carrito[key].qty+=d;
+  if(carrito[key].qty<=0) delete carrito[key];
+  refrescar(); if(overlay.classList.contains("on")) pasoResumen();
 }
-
 function refrescar(){
-  // contadores en cada item
-  document.querySelectorAll(".stepper").forEach(st=>{
-    const c = carrito[st.dataset.id]||0;
-    const el = st.querySelector(".cnt");
-    el.textContent = c;
-    el.classList.toggle("cero", c===0);
-  });
-  const {n,t} = totales();
-  $("#pillCount").textContent = n;
-  $("#pillTotal").textContent = money(t);
-  $("#barra").style.display = n>0 ? "block" : "none";
+  const enCarrito={};
+  for(const k in carrito) enCarrito[carrito[k].id]=true;
+  document.querySelectorAll(".item").forEach(it=> it.classList.toggle("en-carrito", !!enCarrito[it.dataset.id]));
+  const {n,t}=totales();
+  $("#pillCount").textContent=n; $("#pillTotal").textContent=money(t);
+  $("#barra").style.display = n>0 ? "block":"none";
 }
 
-/* ---- Modal helpers ---- */
-const overlay = $("#overlay"), hoja = $("#hoja");
-function abrir(html){ hoja.innerHTML = html; overlay.classList.add("on"); hoja.scrollTop=0; }
-function cerrar(){ overlay.classList.remove("on"); }
-overlay.onclick = e=>{ if(e.target===overlay) cerrar(); };
-$("#verCarrito").onclick = pasoResumen;
-
-/* ---- PASO 1: resumen del pedido ---- */
+/* ===== Paso 1: resumen ===== */
 function pasoResumen(){
-  const {n,t}=totales();
-  if(n===0) return;
-  const lineas = Object.keys(carrito).map(id=>{
-    const it=itemById(id), c=carrito[id];
-    return `<div class="linea-pedido"><span><span class="q">${c}×</span> ${it.nom}</span><span>${money(it.pre*c)}</span></div>`;
+  const {n,t}=totales(); if(n===0){cerrar();return;}
+  const lineas=Object.keys(carrito).map(k=>{
+    const L=carrito[k], it=baseItem(L.id), op=optsTexto(L);
+    return `<div class="linea">
+      <div class="lz">
+        <div class="nm">${it.nom}</div>
+        ${op?`<div class="op">${op}</div>`:""}
+        <div class="ctrl"><button data-m="${k}">–</button><span class="c">${L.qty}</span><button data-p="${k}">+</button></div>
+      </div>
+      <div class="pr">${money(L.precio*L.qty)}</div>
+    </div>`;
   }).join("");
   abrir(`
     <div class="grip"></div>
     <div class="pasos"><i class="on"></i><i></i><i></i></div>
     <h3>Tu pedido</h3>
-    <p class="sub">Revisa que esté completo antes de continuar.</p>
+    <p class="sub">Ajusta cantidades o agrega más.</p>
     ${lineas}
     <div class="total-row"><span>Total a pagar</span><span class="big">${money(t)}</span></div>
-    <button class="btn btn-rojo" style="margin-top:18px" id="aDatos">Continuar</button>
+    <button class="btn btn-rojo" style="margin-top:16px" id="aDatos">Continuar</button>
     <button class="btn btn-fant" style="margin-top:10px" id="seguir">Seguir agregando</button>
   `);
-  $("#aDatos").onclick = pasoDatos;
-  $("#seguir").onclick = cerrar;
+  hoja.querySelectorAll("[data-m]").forEach(b=> b.onclick=()=>cambiaLinea(b.dataset.m,-1));
+  hoja.querySelectorAll("[data-p]").forEach(b=> b.onclick=()=>cambiaLinea(b.dataset.p,+1));
+  $("#aDatos").onclick=pasoDatos;
+  $("#seguir").onclick=cerrar;
 }
 
-/* ---- PASO 2: datos del cliente ---- */
-let datos = { nombre:"", tel:"", hora:"", refresco:"" };
-const pideRefresco = ()=> Object.keys(carrito).some(id=>itemById(id).pideSabor);
+/* ===== Paso 2: datos + tiempo ===== */
+let datos={nombre:"",tel:"",hora:"",refresco:""};
+const pideRefresco=()=>Object.keys(carrito).some(k=>baseItem(carrito[k].id).pideSabor);
+function fmtHora(d){ let h=d.getHours(),m=d.getMinutes(); const ap=h<12?"am":"pm"; h=h%12||12; return h+":"+(m<10?"0"+m:m)+" "+ap; }
 function pasoDatos(){
-  const hayRefresco = pideRefresco();
+  const hayRefresco=pideRefresco();
+  const lead=leadMin();
+  const ahora=Date.now();
+  const chipsTiempo=[0,15,30,60].map((extra,idx)=>{
+    const min=lead+extra; const t=new Date(ahora+min*60000);
+    return `<button class="chip${idx===0?" sel":""}" data-hora="${fmtHora(t)}" data-min="${min}">${idx===0?"Lo más pronto":"+"+extra+" min"} · ${fmtHora(t)}</button>`;
+  }).join("");
+  datos.hora = fmtHora(new Date(ahora+lead*60000)); // default
   abrir(`
     <div class="grip"></div>
     <div class="pasos"><i class="on"></i><i class="on"></i><i></i></div>
     <h3>¿Para quién es?</h3>
-    <p class="sub">Para tener tu pedido listo cuando pases por él.</p>
+    <p class="sub">Para tenerlo listo cuando pases por él.</p>
+    <div class="tiempo"><span>⏱️</span><div><b>Tiempo de preparación: mínimo ${lead} min</b>${lead===30?"(llevas gorditas de maíz)":"(gorditas de harina y burritos)"}. Elige a qué hora pasas.</div></div>
+    <div class="optg"><div class="ol">¿A qué hora pasas?</div><div class="chips" id="chipsHora">${chipsTiempo}</div></div>
+    <label class="campo">…o escribe otra hora
+      <input id="f_hora" type="text" placeholder="Ej. 3:15 pm" value="">
+    </label>
     <label class="campo">Tu nombre
       <input id="f_nombre" type="text" placeholder="Ej. Juan Pérez" value="${datos.nombre}">
     </label>
     <label class="campo">Tu teléfono
       <input id="f_tel" type="tel" inputmode="numeric" placeholder="10 dígitos" value="${datos.tel}">
     </label>
-    <label class="campo">¿A qué hora pasas? (aprox.)
-      <input id="f_hora" type="text" placeholder="Ej. 2:30 pm / en 20 min" value="${datos.hora}">
-    </label>
-    ${hayRefresco?`
-    <label class="campo">🥤 ¿Qué refresco(s)? — especifica el sabor
-      <input id="f_refresco" type="text" placeholder="Ej. Coca, Sprite, Fanta..." value="${datos.refresco}">
-    </label>`:""}
+    ${hayRefresco?`<label class="campo">🥤 ¿Qué refresco(s)? — sabor
+      <input id="f_refresco" type="text" placeholder="Ej. Coca, Sprite..." value="${datos.refresco}"></label>`:""}
     <button class="btn btn-rojo" style="margin-top:20px" id="aPago">Ir a pagar</button>
   `);
-  $("#aPago").onclick = ()=>{
-    datos.nombre = $("#f_nombre").value.trim();
-    datos.tel    = $("#f_tel").value.trim();
-    datos.hora   = $("#f_hora").value.trim();
-    datos.refresco = hayRefresco ? $("#f_refresco").value.trim() : "";
-    if(!datos.nombre || datos.tel.length<8){
-      alert("Pon tu nombre y un teléfono válido para continuar 🙂");
-      return;
-    }
-    if(hayRefresco && !datos.refresco){
-      alert("Especifica el sabor del refresco (Coca, etc.) 🥤");
-      return;
-    }
+  hoja.querySelectorAll("#chipsHora .chip").forEach(c=> c.onclick=()=>{
+    hoja.querySelectorAll("#chipsHora .chip").forEach(x=>x.classList.remove("sel"));
+    c.classList.add("sel"); datos.hora=c.dataset.hora; $("#f_hora").value="";
+  });
+  $("#f_hora").oninput=()=>{ if($("#f_hora").value.trim()){ hoja.querySelectorAll("#chipsHora .chip").forEach(x=>x.classList.remove("sel")); datos.hora=$("#f_hora").value.trim(); } };
+  $("#aPago").onclick=()=>{
+    datos.nombre=$("#f_nombre").value.trim();
+    datos.tel=$("#f_tel").value.trim();
+    if($("#f_hora").value.trim()) datos.hora=$("#f_hora").value.trim();
+    datos.refresco=hayRefresco ? $("#f_refresco").value.trim() : "";
+    if(!datos.nombre || datos.tel.length<8){ alert("Pon tu nombre y un teléfono válido 🙂"); return; }
+    if(hayRefresco && !datos.refresco){ alert("Especifica el sabor del refresco (Coca, etc.) 🥤"); return; }
     pasoPago();
   };
 }
 
-/* ---- PASO 3: pago anticipado (el candado anti-pérdida) ---- */
+/* ===== Paso 3: pago anticipado ===== */
 function pasoPago(){
   const {t}=totales();
   const tienePago = CONFIG.linkPago && CONFIG.linkPago.length>5;
-  const bloquePago = tienePago
-    ? `<a class="btn btn-amar" style="margin-top:8px;text-decoration:none" href="${CONFIG.linkPago}" target="_blank" rel="noopener" id="irPagar">💳 Pagar ${money(t)} ahora</a>`
-    : `<div class="candado" style="background:#fff7e6;border-color:#f3dca0;color:#7a5a10">
-         <span>⚠️</span><div><b>Falta tu link de pago</b>Aún no pegaste el link de Mercado Pago/Clip en la configuración. Mientras, el cliente puede marcar el pago manual.</div>
-       </div>`;
+  const bloque = tienePago
+    ? `<a class="btn btn-amar" style="margin-top:8px;text-decoration:none" href="${CONFIG.linkPago}" target="_blank" rel="noopener">💳 Pagar ${money(t)} ahora</a>`
+    : `<div class="tiempo"><span>⚠️</span><div><b>Falta el link de pago</b>Pega el link de Mercado Pago/Clip en la configuración. Mientras, se puede marcar el pago manual.</div></div>`;
   abrir(`
     <div class="grip"></div>
     <div class="pasos"><i class="on"></i><i class="on"></i><i class="on"></i></div>
     <h3>Paga por adelantado</h3>
     <p class="sub">Pagas hoy, llegas y solo recoges. Sin filas, sin cambio.</p>
-
     <div class="total-row"><span>Total</span><span class="big">${money(t)}</span></div>
-
-    <div class="candado">
-      <span>🔒</span>
-      <div><b>¿Por qué se paga antes?</b>
-      Apenas confirmamos tu pago, ${CONFIG.negocio} empieza a preparar tu comida fresca. Así siempre está lista a tu llegada.</div>
-    </div>
-
-    ${bloquePago}
-
-    <label class="check">
-      <input type="checkbox" id="yaPague">
-      <span><b>Ya realicé mi pago</b><br>Marca esta casilla cuando hayas pagado para poder enviar tu pedido.</span>
-    </label>
-
-    <button class="btn btn-verde" style="margin-top:16px" id="enviar" disabled>
-      Enviar pedido por WhatsApp
-    </button>
-    <p class="mini">Al enviar, tu comanda llega directo a la cocina con la nota de <b>PAGADO</b>.</p>
+    <div class="candado"><span>🔒</span><div><b>¿Por qué se paga antes?</b>
+      Apenas confirmamos tu pago, ${CONFIG.negocio} empieza a prepararlo fresco. Así está listo a tu llegada.</div></div>
+    ${bloque}
+    <label class="check"><input type="checkbox" id="yaPague">
+      <span><b>Ya realicé mi pago</b><br>Marca esto cuando hayas pagado para enviar tu pedido.</span></label>
+    <button class="btn btn-verde" style="margin-top:16px" id="enviar" disabled>Enviar pedido por WhatsApp</button>
+    <p class="mini">Tu comanda llega directo a la cocina con la nota de <b>PAGADO</b>.</p>
   `);
-  const chk = $("#yaPague"), btn = $("#enviar");
-  chk.onchange = ()=> btn.disabled = !chk.checked;
-  btn.onclick = enviarWhatsApp;
+  const chk=$("#yaPague"), btn=$("#enviar");
+  chk.onchange=()=> btn.disabled=!chk.checked;
+  btn.onclick=enviarWhatsApp;
 }
 
-/* ---- Construir y mandar la comanda a WhatsApp ---- */
 function enviarWhatsApp(){
-  const {n,t}=totales();
-  const folio = "G" + Date.now().toString().slice(-5);
-  const lineas = Object.keys(carrito).map(id=>{
-    const it=itemById(id), c=carrito[id];
-    return `• ${c}× ${it.nom} — ${money(it.pre*c)}`;
+  const {t}=totales();
+  const folio="G"+Date.now().toString().slice(-5);
+  const lineas=Object.keys(carrito).map(k=>{
+    const L=carrito[k], it=baseItem(L.id), op=optsTexto(L);
+    return `• ${L.qty}× ${it.nom}${op?" ("+op+")":""} — ${money(L.precio*L.qty)}`;
   }).join("\n");
-
-  const msg =
+  const msg=
 `🌮 *NUEVO PEDIDO — ${CONFIG.negocio}*
 Folio: ${folio}
 
@@ -443,9 +425,7 @@ ${datos.refresco?`\n🥤 Refresco(s): ${datos.refresco}`:""}
 📱 ${datos.tel}
 ⏰ Pasa por él: ${datos.hora || "lo antes posible"}
 🏠 Para recoger`;
-
-  const url = `https://wa.me/${CONFIG.whatsappComanda}?text=${encodeURIComponent(msg)}`;
-  window.open(url,"_blank");
+  window.open(`https://wa.me/${CONFIG.whatsappComanda}?text=${encodeURIComponent(msg)}`,"_blank");
   pasoGracias(folio);
 }
 
@@ -459,14 +439,13 @@ function pasoGracias(folio){
       <button class="btn btn-rojo" style="margin-top:18px" id="nuevo">Hacer otro pedido</button>
     </div>
   `);
-  $("#nuevo").onclick = ()=>{
+  $("#nuevo").onclick=()=>{
     for(const k in carrito) delete carrito[k];
-    datos = {nombre:"",tel:"",hora:""};
+    datos={nombre:"",tel:"",hora:"",refresco:""};
     refrescar(); cerrar();
   };
 }
 
-/* ---- init ---- */
 pintarMenu();
 refrescar();
 </script>

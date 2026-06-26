@@ -195,11 +195,13 @@ function optsFor(it){
   const esGordita = it._grupo.indexOf("Gordita")>=0;
   const esBarbacoa = /barbacoa/i.test(it.nom) || /Barbacoa/.test(it._grupo);
   const esQuesadilla = it._grupo.indexOf("Quesadilla")>=0;
+  const esTorta = it._grupo.indexOf("Torta")>=0;
   const g=[];
   if(esGordita) g.push({key:"masa",label:"¿De maíz o harina?",ch:[["harina","Harina"],["maiz","Maíz (+10 min)"]],def:"harina"});
   if(esBarbacoa) g.push({key:"cc",label:"Cebolla y cilantro",ch:[["con","Con"],["sin","Sin"]],def:"con"});
+  if(esTorta) g.push({key:"quitar",label:"¿Con todo? Lleva aguacate, lechuga y tomate",multi:true,ch:[["aguacate","Sin aguacate"],["lechuga","Sin lechuga"],["tomate","Sin tomate"]],def:[]});
   g.push({key:"salsa",label:"Salsa",ch:[["sin","Sin"],["con","Con"]],def:"sin"});
-  if(!esQuesadilla) g.push({key:"asadero",label:"Asadero",ch:[["no","Sin"],["si","Con (+$"+CONFIG.asaderoExtra+")"]],def:"no"});
+  if(!esQuesadilla && !esTorta) g.push({key:"asadero",label:"Asadero",ch:[["no","Sin"],["si","Con (+$"+CONFIG.asaderoExtra+")"]],def:"no"});
   return g;
 }
 function esGorditaMaiz(line){ const it=baseItem(line.id); return it._grupo.indexOf("Gordita")>=0 && line.opts.masa==="maiz"; }
@@ -208,7 +210,7 @@ function esGorditaMaiz(line){ const it=baseItem(line.id); return it._grupo.index
 const carrito = {}; // lineKey -> {id, opts, precio, qty}
 const $ = (s,el=document)=>el.querySelector(s);
 const money = n => CONFIG.moneda + n.toLocaleString("es-MX");
-function lineKey(id,opts){ return id+"|"+["masa","cc","salsa","asadero"].map(k=>opts[k]||"").join(","); }
+function lineKey(id,opts){ return id+"|"+["masa","cc","salsa","asadero","quitar"].map(k=>{const v=opts[k];return Array.isArray(v)?v.slice().sort().join("+"):(v||"");}).join(","); }
 function precioLinea(it,opts){ return it.pre + (opts.asadero==="si"?CONFIG.asaderoExtra:0); }
 function optsTexto(line){
   const p=[];
@@ -216,6 +218,7 @@ function optsTexto(line){
   if(line.opts.cc) p.push(line.opts.cc==="con"?"con cebolla/cilantro":"sin cebolla/cilantro");
   if(line.opts.salsa) p.push(line.opts.salsa==="con"?"con salsa":"sin salsa");
   if(line.opts.asadero) p.push(line.opts.asadero==="si"?"con asadero":"sin asadero");
+  if(line.opts.quitar) p.push(line.opts.quitar.length? "sin "+line.opts.quitar.join(", sin ") : "con todo");
   return p.join(" · ");
 }
 function totales(){ let n=0,t=0; for(const k in carrito){n+=carrito[k].qty; t+=carrito[k].qty*carrito[k].precio;} return {n,t}; }
@@ -253,12 +256,12 @@ $("#verCarrito").onclick=pasoResumen;
 let sel={}, selQty=1, selId=null;
 function openOpciones(id){
   const it=baseItem(id); const groups=optsFor(it);
-  selId=id; selQty=1; sel={}; groups.forEach(gr=> sel[gr.key]=gr.def);
+  selId=id; selQty=1; sel={}; groups.forEach(gr=> sel[gr.key]= Array.isArray(gr.def)? gr.def.slice() : gr.def);
   const gruposHtml = groups.map(gr=>`
-    <div class="optg" data-key="${gr.key}">
+    <div class="optg" data-key="${gr.key}" data-multi="${gr.multi?1:0}">
       <div class="ol">${gr.label}</div>
       <div class="chips">
-        ${gr.ch.map(([v,l])=>`<button class="chip${v===gr.def?" sel":""}" data-v="${v}">${l}</button>`).join("")}
+        ${gr.ch.map(([v,l])=>{const on=gr.multi?sel[gr.key].includes(v):sel[gr.key]===v;return `<button class="chip${on?" sel":""}" data-v="${v}">${l}</button>`;}).join("")}
       </div>
     </div>`).join("");
   abrir(`
@@ -275,10 +278,17 @@ function openOpciones(id){
     <button class="btn btn-rojo" style="margin-top:18px" id="agregar">Agregar al pedido</button>
   `);
   hoja.querySelectorAll(".optg").forEach(og=>{
-    const key=og.dataset.key;
+    const key=og.dataset.key, multi=og.dataset.multi==="1";
     og.querySelectorAll(".chip").forEach(c=> c.onclick=()=>{
-      og.querySelectorAll(".chip").forEach(x=>x.classList.remove("sel"));
-      c.classList.add("sel"); sel[key]=c.dataset.v; pintaOpPrecio();
+      if(multi){
+        const v=c.dataset.v, arr=sel[key], i=arr.indexOf(v);
+        if(i>=0) arr.splice(i,1); else arr.push(v);
+        c.classList.toggle("sel");
+      } else {
+        og.querySelectorAll(".chip").forEach(x=>x.classList.remove("sel"));
+        c.classList.add("sel"); sel[key]=c.dataset.v;
+      }
+      pintaOpPrecio();
     });
   });
   $("#qmenos").onclick=()=>{ selQty=Math.max(1,selQty-1); $("#qn").textContent=selQty; pintaOpPrecio(); };
@@ -291,7 +301,7 @@ function pintaOpPrecio(){
   const el=$("#opPrecio"); if(el) el.textContent=money(pl*selQty);
 }
 function addLinea(){
-  const it=baseItem(selId); const opts=Object.assign({},sel);
+  const it=baseItem(selId); const opts=Object.assign({},sel); if(Array.isArray(opts.quitar)) opts.quitar=opts.quitar.slice();
   const key=lineKey(selId,opts);
   if(carrito[key]) carrito[key].qty+=selQty;
   else carrito[key]={id:selId, opts:opts, precio:precioLinea(it,opts), qty:selQty};

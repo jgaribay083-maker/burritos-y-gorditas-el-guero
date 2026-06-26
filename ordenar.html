@@ -414,7 +414,7 @@ function pasoPago(){
   const {t}=totales();
   const tienePago = CONFIG.linkPago && CONFIG.linkPago.length>5;
   const bloque = tienePago
-    ? `<a class="btn btn-amar" style="margin-top:8px;text-decoration:none" href="${CONFIG.linkPago}" target="_blank" rel="noopener">💳 Pagar ${money(t)} ahora</a>`
+    ? `<a class="btn btn-amar" style="margin-top:8px;text-decoration:none" href="${CONFIG.linkPago}" target="_blank" rel="noopener" id="irPagar">💳 Pagar ${money(t)} ahora</a>`
     : `<div class="tiempo"><span>⚠️</span><div><b>Falta el link de pago</b>Pega el link de Mercado Pago/Clip en la configuración. Mientras, se puede marcar el pago manual.</div></div>`;
   abrir(`
     <div class="grip"></div>
@@ -426,11 +426,16 @@ function pasoPago(){
       Apenas confirmamos tu pago, ${CONFIG.negocio} empieza a prepararlo fresco. Así está listo a tu llegada.</div></div>
     ${bloque}
     <label class="check"><input type="checkbox" id="yaPague">
-      <span><b>Ya realicé mi pago</b><br>Marca esto cuando hayas pagado para enviar tu pedido.</span></label>
+      <span><b>Ya realicé mi pago</b><br>Solo márcalo si ya pagaste. Confirmamos el depósito antes de preparar.</span></label>
     <button class="btn btn-verde" style="margin-top:16px" id="enviar" disabled>Enviar pedido por WhatsApp</button>
-    <p class="mini">Tu comanda llega directo a la cocina con la nota de <b>PAGADO</b>.</p>
+    <p class="mini">Tu pedido se prepara una vez <b>confirmado tu pago</b> en Mercado Pago.</p>
   `);
   const chk=$("#yaPague"), btn=$("#enviar");
+  if(tienePago){
+    chk.disabled=true;                 // no se puede marcar sin pasar por el pago
+    const pay=$("#irPagar");
+    if(pay) pay.addEventListener("click",()=>{ chk.disabled=false; });
+  }
   chk.onchange=()=> btn.disabled=!chk.checked;
   btn.onclick=enviarWhatsApp;
 }
@@ -449,7 +454,8 @@ Folio: ${folio}
 ${lineas}
 
 *TOTAL: ${money(t)}*
-✅ *PAGADO* (verificar en la app de pago)
+💵 El cliente marcó que YA PAGÓ.
+⚠️ CONFIRMA el depósito en Mercado Pago antes de preparar.
 ${datos.refresco?`\n🥤 Refresco(s): ${datos.refresco}`:""}
 👤 ${datos.nombre}
 📱 ${datos.tel}

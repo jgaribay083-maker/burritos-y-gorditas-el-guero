@@ -95,8 +95,9 @@
   .total-row .big{font-size:26px;font-weight:800;color:var(--rojo)}
 
   label.campo{display:block;margin-top:14px;font-size:13px;font-weight:700;color:var(--tinta-suave)}
-  .campo input{width:100%;margin-top:6px;padding:13px 14px;font-size:16px;border:1.5px solid var(--linea);border-radius:12px;background:#fff;color:var(--tinta)}
-  .campo input:focus{outline:none;border-color:var(--rojo)}
+  .campo input,.campo select{width:100%;margin-top:6px;padding:13px 14px;font-size:16px;border:1.5px solid var(--linea);border-radius:12px;background:#fff;color:var(--tinta)}
+  .campo input:focus,.campo select:focus{outline:none;border-color:var(--rojo)}
+  .chip[disabled]{opacity:.45;cursor:not-allowed}
   .tiempo{background:#fff7e6;border:1px solid #f3dca0;color:#7a5a10;border-radius:12px;padding:12px 14px;font-size:13.5px;margin-top:14px;display:flex;gap:9px}
   .tiempo b{display:block}
 
@@ -334,24 +335,40 @@ function pasoResumen(){
 let datos={nombre:"",tel:"",hora:"",refresco:""};
 const pideRefresco=()=>Object.keys(carrito).some(k=>baseItem(carrito[k].id).pideSabor);
 function fmtHora(d){ let h=d.getHours(),m=d.getMinutes(); const ap=h<12?"am":"pm"; h=h%12||12; return h+":"+(m<10?"0"+m:m)+" "+ap; }
+const ABRE=6, CIERRA=22, PASO=15; // horario 6am-10pm, slots de 15 min
+function slotsDelDia(esHoy, lead){
+  const out=[]; const now=new Date(); let start;
+  if(esHoy){
+    start=new Date(now.getTime()+lead*60000); start.setSeconds(0,0);
+    const m=start.getMinutes(); start.setMinutes(m+((PASO-(m%PASO))%PASO));
+    if(start.getHours()<ABRE){ start=new Date(now); start.setHours(ABRE,0,0,0); }
+  } else { start=new Date(now.getTime()+86400000); start.setHours(ABRE,0,0,0); }
+  const fin=new Date(start); fin.setHours(CIERRA,0,0,0);
+  const cur=new Date(start);
+  while(cur.getTime()<=fin.getTime()){ out.push(new Date(cur)); cur.setMinutes(cur.getMinutes()+PASO); }
+  return out;
+}
 function pasoDatos(){
   const hayRefresco=pideRefresco();
   const lead=leadMin();
   const ahora=Date.now();
-  const chipsTiempo=[0,15,30,60].map((extra,idx)=>{
-    const min=lead+extra; const t=new Date(ahora+min*60000);
-    return `<button class="chip${idx===0?" sel":""}" data-hora="${fmtHora(t)}" data-min="${min}">${idx===0?"Lo más pronto":"+"+extra+" min"} · ${fmtHora(t)}</button>`;
-  }).join("");
-  datos.hora = fmtHora(new Date(ahora+lead*60000)); // default
+  const hoySlots = slotsDelDia(true, lead);
+  const hayHoy = hoySlots.length>0;
+  let diaSel = hayHoy ? "hoy" : "manana";
   abrir(`
     <div class="grip"></div>
     <div class="pasos"><i class="on"></i><i class="on"></i><i></i></div>
     <h3>¿Para quién es?</h3>
     <p class="sub">Para tenerlo listo cuando pases por él.</p>
     <div class="tiempo"><span>⏱️</span><div><b>Tiempo de preparación: mínimo ${lead} min</b>${lead===30?"(llevas gorditas de maíz)":"(gorditas de harina y burritos)"}. Elige a qué hora pasas.</div></div>
-    <div class="optg"><div class="ol">¿A qué hora pasas?</div><div class="chips" id="chipsHora">${chipsTiempo}</div></div>
-    <label class="campo">…o escribe otra hora
-      <input id="f_hora" type="text" placeholder="Ej. 3:15 pm" value="">
+    <div class="optg"><div class="ol">¿Cuándo pasas por él?</div>
+      <div class="chips" id="dias">
+        <button class="chip${diaSel==="hoy"?" sel":""}" data-dia="hoy" ${hayHoy?"":"disabled"}>Hoy${hayHoy?"":" (cerrado)"}</button>
+        <button class="chip${diaSel==="manana"?" sel":""}" data-dia="manana">Mañana</button>
+      </div>
+    </div>
+    <label class="campo">Hora de recolección
+      <select id="slot"></select>
     </label>
     <label class="campo">Tu nombre
       <input id="f_nombre" type="text" placeholder="Ej. Juan Pérez" value="${datos.nombre}">
@@ -363,15 +380,28 @@ function pasoDatos(){
       <input id="f_refresco" type="text" placeholder="Ej. Coca, Sprite..." value="${datos.refresco}"></label>`:""}
     <button class="btn btn-rojo" style="margin-top:20px" id="aPago">Ir a pagar</button>
   `);
-  hoja.querySelectorAll("#chipsHora .chip").forEach(c=> c.onclick=()=>{
-    hoja.querySelectorAll("#chipsHora .chip").forEach(x=>x.classList.remove("sel"));
-    c.classList.add("sel"); datos.hora=c.dataset.hora; $("#f_hora").value="";
+  function pintaSlots(){
+    const esHoy = diaSel==="hoy";
+    const slots = esHoy ? hoySlots : slotsDelDia(false, lead);
+    const diaTxt = esHoy ? "Hoy" : "Mañana";
+    $("#slot").innerHTML = slots.map((d,i)=>{
+      const lbl = diaTxt+" — "+fmtHora(d)+(esHoy&&i===0?" (lo más pronto)":"");
+      return `<option value="${lbl}">${lbl}</option>`;
+    }).join("");
+    datos.hora = slots.length ? (diaTxt+" — "+fmtHora(slots[0])) : "";
+  }
+  hoja.querySelectorAll("#dias .chip").forEach(c=> c.onclick=()=>{
+    if(c.hasAttribute("disabled")) return;
+    diaSel=c.dataset.dia;
+    hoja.querySelectorAll("#dias .chip").forEach(x=>x.classList.remove("sel"));
+    c.classList.add("sel"); pintaSlots();
   });
-  $("#f_hora").oninput=()=>{ if($("#f_hora").value.trim()){ hoja.querySelectorAll("#chipsHora .chip").forEach(x=>x.classList.remove("sel")); datos.hora=$("#f_hora").value.trim(); } };
+  $("#slot").onchange=()=>{ datos.hora=$("#slot").value; };
+  pintaSlots();
   $("#aPago").onclick=()=>{
     datos.nombre=$("#f_nombre").value.trim();
     datos.tel=$("#f_tel").value.trim();
-    if($("#f_hora").value.trim()) datos.hora=$("#f_hora").value.trim();
+    datos.hora=$("#slot").value || datos.hora;
     datos.refresco=hayRefresco ? $("#f_refresco").value.trim() : "";
     if(!datos.nombre || datos.tel.length<8){ alert("Pon tu nombre y un teléfono válido 🙂"); return; }
     if(hayRefresco && !datos.refresco){ alert("Especifica el sabor del refresco (Coca, etc.) 🥤"); return; }

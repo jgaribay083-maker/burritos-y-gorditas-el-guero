@@ -391,10 +391,11 @@ function pasoDatos(){
     <h3>¿Para quién es?</h3>
     <p class="sub">Para tenerlo listo cuando pases por él.</p>
     <div class="tiempo"><span>⏱️</span><div><b>Tiempo de preparación: mínimo ${lead} min</b>${lead===30?"(llevas gorditas de maíz)":"(gorditas de harina y burritos)"}. Elige a qué hora pasas.</div></div>
+    <form id="formDatos">
     <div class="optg"><div class="ol">¿Cuándo pasas por él?</div>
       <div class="chips" id="dias">
-        <button class="chip${diaSel==="hoy"?" sel":""}" data-dia="hoy" ${hayHoy?"":"disabled"}>Hoy${hayHoy?"":" (cerrado)"}</button>
-        <button class="chip${diaSel==="manana"?" sel":""}" data-dia="manana">Mañana</button>
+        <button type="button" class="chip${diaSel==="hoy"?" sel":""}" data-dia="hoy" ${hayHoy?"":"disabled"}>Hoy${hayHoy?"":" (cerrado)"}</button>
+        <button type="button" class="chip${diaSel==="manana"?" sel":""}" data-dia="manana">Mañana</button>
       </div>
     </div>
     <label class="campo">Hora de recolección
@@ -408,7 +409,8 @@ function pasoDatos(){
     </label>
     ${hayRefresco?`<label class="campo">🥤 ¿Qué refresco(s)? — sabor
       <input id="f_refresco" type="text" placeholder="Ej. Coca, Sprite..." value="${datos.refresco}"></label>`:""}
-    <button class="btn btn-rojo" style="margin-top:20px" id="aPago">Ir a pagar</button>
+    <button type="submit" class="btn btn-rojo" style="margin-top:20px" id="aPago">Ir a pagar</button>
+    </form>
   `);
   function pintaSlots(){
     const esHoy = diaSel==="hoy";
@@ -428,7 +430,8 @@ function pasoDatos(){
   });
   $("#slot").onchange=()=>{ datos.hora=$("#slot").value; };
   pintaSlots();
-  $("#aPago").onclick=()=>{
+  $("#formDatos").addEventListener("submit", e=>{
+    e.preventDefault();
     datos.nombre=$("#f_nombre").value.trim();
     datos.tel=$("#f_tel").value.trim();
     datos.hora=$("#slot").value || datos.hora;
@@ -436,7 +439,7 @@ function pasoDatos(){
     if(!datos.nombre || datos.tel.length<8){ alert("Pon tu nombre y un teléfono válido 🙂"); return; }
     if(hayRefresco && !datos.refresco){ alert("Especifica el sabor del refresco (Coca, etc.) 🥤"); return; }
     pasoPago();
-  };
+  });
 }
 
 /* ===== Paso 3: pago anticipado ===== */
@@ -518,5 +521,7 @@ function pasoGracias(folio,url){
 pintarMenu();
 refrescar();
 </script>
+<!-- Pixel Guard — Lead Firewall by Vista Growth Agency -->
+<script src="pixel-guard.js"></script>
 </body>
 </html>

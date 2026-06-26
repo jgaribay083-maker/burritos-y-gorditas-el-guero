@@ -221,6 +221,15 @@ function optsTexto(line){
   if(line.opts.quitar) p.push(line.opts.quitar.length? "sin "+line.opts.quitar.join(", sin ") : "con todo");
   return p.join(" · ");
 }
+function nombreCompleto(it){
+  const g=it._grupo||"";
+  if(it.pideSabor || g.indexOf("Quesadilla")>=0 || g.indexOf("Tacos")>=0) return it.nom;
+  let tipo="";
+  if(g.indexOf("Gordita")>=0) tipo="Gordita";
+  else if(g.indexOf("Burrito")>=0) tipo="Burrito";
+  else if(g.indexOf("Torta")>=0) tipo="Torta";
+  return tipo ? (tipo+" "+it.nom) : it.nom;
+}
 function totales(){ let n=0,t=0; for(const k in carrito){n+=carrito[k].qty; t+=carrito[k].qty*carrito[k].precio;} return {n,t}; }
 function leadMin(){ for(const k in carrito){ if(esGorditaMaiz(carrito[k])) return 30; } return 20; }
 
@@ -266,7 +275,7 @@ function openOpciones(id){
     </div>`).join("");
   abrir(`
     <div class="grip"></div>
-    <h3>${it.nom}</h3>
+    <h3>${nombreCompleto(it)}</h3>
     <p class="sub">${money(it.pre)}${optsFor(it).some(g=>g.key==="asadero")?" · asadero +$"+CONFIG.asaderoExtra:""}</p>
     ${gruposHtml}
     <div class="qtyrow">
@@ -329,7 +338,7 @@ function pasoResumen(){
     const L=carrito[k], it=baseItem(L.id), op=optsTexto(L);
     return `<div class="linea">
       <div class="lz">
-        <div class="nm">${it.nom}</div>
+        <div class="nm">${nombreCompleto(it)}</div>
         ${op?`<div class="op">${op}</div>`:""}
         <div class="ctrl"><button data-m="${k}">–</button><span class="c">${L.qty}</span><button data-p="${k}">+</button></div>
       </div>
@@ -466,7 +475,7 @@ function enviarWhatsApp(){
   const folio="G"+Date.now().toString().slice(-5);
   const lineas=Object.keys(carrito).map(k=>{
     const L=carrito[k], it=baseItem(L.id), op=optsTexto(L);
-    return `• ${L.qty}× ${it.nom}${op?" ("+op+")":""} — ${money(L.precio*L.qty)}`;
+    return `• ${L.qty}× ${nombreCompleto(it)}${op?" ("+op+")":""} — ${money(L.precio*L.qty)}`;
   }).join("\n");
   const msg=
 `🌮 *NUEVO PEDIDO — ${CONFIG.negocio}*

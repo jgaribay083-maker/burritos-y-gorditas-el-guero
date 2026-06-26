@@ -139,7 +139,7 @@
 /* ===== CONFIG (cambia solo esto) ===== */
 const CONFIG = {
   whatsappComanda: "526367000081",   // WhatsApp de la hermana (comanda)
-  linkPago: "",                      // link de pago Mercado Pago/Clip
+  linkPago: "https://link.mercadopago.com.mx/gorditaselguer",  // link de pago Mercado Pago
   negocio: "Burritos y Gorditas el Güero",
   moneda: "$",
   asaderoExtra: 10,                  // se suma a los que lleven asadero
@@ -167,6 +167,16 @@ const MENU = [
     {id:"g50_bist",nom:"Bistec con chile pasado"},{id:"g50_chpr",nom:"Chicharrón prensado"},
   ]},
   { grupo:"🫓 Gordita de Barbacoa", precio:70, items:[ {id:"g_barb",nom:"Barbacoa de labio"} ]},
+  { grupo:"🥪 Tortas", precio:90, nota:"Elige tu guiso", items:[
+    {id:"t_jamon",nom:"Jamón"},{id:"t_bistec",nom:"Bistec"},
+    {id:"t_pavo",nom:"Colita de pavo"},{id:"t_chuleta",nom:"Chuleta ahumada"},
+  ]},
+  { grupo:"🌮 Tacos de Barbacoa", precio:90, items:[ {id:"tacos_barb",nom:"Tacos de barbacoa"} ]},
+  { grupo:"🧀 Quesadillas", items:[
+    {id:"q_sencilla",nom:"Quesadilla sencilla",pre:50},
+    {id:"q_guiso",nom:"Quesadilla con guiso",pre:60},
+    {id:"q_asadero",nom:"Quesadilla de asadero",pre:70},
+  ]},
   { grupo:"🥤 Bebidas", items:[
     {id:"refresco",nom:"Refresco",des:"Especifica el sabor al pedir (Coca, etc.)",pre:35,pideSabor:true},
   ]},
@@ -184,11 +194,12 @@ function optsFor(it){
   if(it.pideSabor) return [];
   const esGordita = it._grupo.indexOf("Gordita")>=0;
   const esBarbacoa = /barbacoa/i.test(it.nom) || /Barbacoa/.test(it._grupo);
+  const esQuesadilla = it._grupo.indexOf("Quesadilla")>=0;
   const g=[];
   if(esGordita) g.push({key:"masa",label:"¿De maíz o harina?",ch:[["harina","Harina"],["maiz","Maíz (+10 min)"]],def:"harina"});
   if(esBarbacoa) g.push({key:"cc",label:"Cebolla y cilantro",ch:[["con","Con"],["sin","Sin"]],def:"con"});
   g.push({key:"salsa",label:"Salsa",ch:[["sin","Sin"],["con","Con"]],def:"sin"});
-  g.push({key:"asadero",label:"Asadero",ch:[["no","Sin"],["si","Con (+$"+CONFIG.asaderoExtra+")"]],def:"no"});
+  if(!esQuesadilla) g.push({key:"asadero",label:"Asadero",ch:[["no","Sin"],["si","Con (+$"+CONFIG.asaderoExtra+")"]],def:"no"});
   return g;
 }
 function esGorditaMaiz(line){ const it=baseItem(line.id); return it._grupo.indexOf("Gordita")>=0 && line.opts.masa==="maiz"; }

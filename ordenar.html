@@ -444,7 +444,7 @@ function pasoPago(){
   const {t}=totales();
   const tienePago = CONFIG.linkPago && CONFIG.linkPago.length>5;
   const bloque = tienePago
-    ? `<a class="btn btn-amar" style="margin-top:8px;text-decoration:none" href="${CONFIG.linkPago}" target="_blank" rel="noopener" id="irPagar">💳 Pagar ${money(t)} ahora</a>`
+    ? `<div class="tiempo" style="background:#fff7e6;border-color:#f3dca0;color:#7a5a10"><span>👉</span><div>En Mercado Pago vas a escribir el monto. <b>Escribe exactamente: ${money(t)}</b></div></div><a class="btn btn-amar" style="margin-top:8px;text-decoration:none" href="${CONFIG.linkPago}" target="_blank" rel="noopener" id="irPagar">💳 Pagar ${money(t)} ahora</a>`
     : `<div class="tiempo"><span>⚠️</span><div><b>Falta el link de pago</b>Pega el link de Mercado Pago/Clip en la configuración. Mientras, se puede marcar el pago manual.</div></div>`;
   abrir(`
     <div class="grip"></div>

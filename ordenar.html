@@ -491,18 +491,21 @@ ${datos.refresco?`\n🥤 Refresco(s): ${datos.refresco}`:""}
 📱 ${datos.tel}
 ⏰ Pasa por él: ${datos.hora || "lo antes posible"}
 🏠 Para recoger`;
-  window.open(`https://wa.me/${CONFIG.whatsappComanda}?text=${encodeURIComponent(msg)}`,"_blank");
-  pasoGracias(folio);
+  const waUrl=`https://wa.me/${CONFIG.whatsappComanda}?text=${encodeURIComponent(msg)}`;
+  window.open(waUrl,"_blank");
+  pasoGracias(folio,waUrl);
 }
 
-function pasoGracias(folio){
+function pasoGracias(folio,url){
   abrir(`
     <div class="grip"></div>
-    <div style="text-align:center;padding:14px 0 6px">
-      <div style="font-size:54px;line-height:1">🎉</div>
-      <h3 style="margin-top:8px">¡Pedido enviado!</h3>
-      <p class="sub" style="margin-top:6px">Tu folio es <b>${folio}</b>.<br>Apenas confirmemos tu pago lo empezamos a preparar.</p>
-      <button class="btn btn-rojo" style="margin-top:18px" id="nuevo">Hacer otro pedido</button>
+    <div style="text-align:center;padding:10px 0 6px">
+      <div style="font-size:48px;line-height:1">📲</div>
+      <h3 style="margin-top:8px">¡Casi listo! Falta 1 paso</h3>
+      <div class="tiempo" style="text-align:left;margin-top:12px"><span>⚠️</span><div>Se abrió WhatsApp con tu pedido <b>ya escrito</b>. Solo presiona <b>ENVIAR ➤</b> ahí para que le llegue a la cocina.<br><b>Si no lo envías, tu pedido NO nos llega.</b></div></div>
+      <a class="btn btn-verde" style="margin-top:14px;text-decoration:none" href="${url}" target="_blank" rel="noopener">Abrir WhatsApp otra vez</a>
+      <p class="sub" style="margin-top:12px">Tu folio es <b>${folio}</b>. Apenas confirmemos tu pago, empezamos a prepararlo.</p>
+      <button class="btn btn-fant" style="margin-top:10px" id="nuevo">Hacer otro pedido</button>
     </div>
   `);
   $("#nuevo").onclick=()=>{

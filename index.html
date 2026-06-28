@@ -68,7 +68,6 @@
   .hero canvas.humo{position:absolute;inset:0;z-index:1;pointer-events:none}
   @media(prefers-reduced-motion:reduce){
     .hero .bg img{animation:none}
-    .hero canvas.humo{display:none}
   }
   .hero .wrap{position:relative;z-index:2;padding:32px 18px 44px;text-align:center}
   .hero .sign{width:100%;max-width:540px;margin:16px auto 2px;border-radius:16px;display:block;
@@ -114,14 +113,60 @@
     color:#fff;font-size:13px;font-weight:700;padding:22px 14px 11px;text-align:left}
   .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 
-  /* Por qué elegirnos */
-  .razones{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:30px}
-  .razon{background:var(--blanco);border:1px solid var(--linea);border-radius:var(--r);padding:20px;
-    box-shadow:var(--sombra);transition:transform .18s,box-shadow .18s}
-  .razon:hover{transform:translateY(-3px);box-shadow:var(--sombra-card)}
-  .razon .ic{font-size:30px}
-  .razon h3{font-size:17px;margin:10px 0 5px}
-  .razon p{font-size:14px;color:var(--tinta-suave)}
+  /* ===== Voz del Güero ===== */
+  .voz{display:grid;grid-template-columns:1.05fr .95fr;gap:34px;align-items:center;margin-top:34px}
+  .voz .palabra{position:relative}
+  .voz .palabra::before{content:"\201C";position:absolute;top:-40px;left:-8px;
+    font-family:Georgia,serif;font-size:120px;line-height:1;color:var(--ambar);opacity:.45;pointer-events:none}
+  .voz blockquote{font-family:Georgia,serif;font-size:clamp(20px,3.4vw,27px);line-height:1.36;
+    color:var(--tinta);font-style:italic;margin:0;position:relative}
+  .voz .firma{display:flex;align-items:center;gap:13px;margin-top:22px}
+  .voz .firma .ln{width:34px;height:2px;background:var(--rojo);flex:none}
+  .voz .firma b{font-family:Georgia,serif;font-size:16px;color:var(--rojo)}
+  .voz .firma span{font-size:12.5px;color:var(--tinta-suave)}
+  .voz .foto{position:relative;border-radius:var(--r);overflow:hidden;box-shadow:var(--sombra-card);
+    aspect-ratio:4/5;transform:rotate(-1.6deg)}
+  .voz .foto img{width:100%;height:100%;object-fit:cover}
+  .voz .foto::after{content:"Hecho a mano, cada día";position:absolute;left:12px;bottom:12px;
+    background:var(--ambar);color:#3a2400;font-weight:800;font-size:12px;padding:6px 12px;
+    border-radius:999px;font-family:"Segoe UI",sans-serif}
+
+  /* ===== Carrusel de razones ===== */
+  .carru-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-top:48px;flex-wrap:wrap}
+  .carru-head h3{font-family:Georgia,serif;font-size:clamp(19px,3.6vw,24px)}
+  .carru-nav{display:flex;gap:9px}
+  .carru-nav button{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--linea);
+    background:var(--blanco);color:var(--rojo);font:700 20px/1 Georgia,serif;cursor:pointer;
+    display:grid;place-items:center;box-shadow:var(--sombra);transition:transform .12s,background .15s,opacity .15s}
+  .carru-nav button:hover{background:var(--crema-2)}
+  .carru-nav button:active{transform:scale(.92)}
+  .carru-nav button:disabled{opacity:.32;cursor:default}
+  .carru-wrap{position:relative;margin-top:18px}
+  .carru{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;
+    padding:6px 2px 14px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .carru::-webkit-scrollbar{display:none}
+  .tarjeta-r{flex:0 0 80%;max-width:340px;scroll-snap-align:center;background:var(--blanco);
+    border:1px solid var(--linea);border-radius:var(--r);overflow:hidden;box-shadow:var(--sombra-card)}
+  .tarjeta-r .img{position:relative;aspect-ratio:4/3;overflow:hidden}
+  .tarjeta-r .img img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+  .tarjeta-r:hover .img img{transform:scale(1.05)}
+  .tarjeta-r .num{position:absolute;top:12px;left:12px;width:31px;height:31px;border-radius:50%;
+    background:var(--rojo);color:#fff;font:700 15px/1 Georgia,serif;display:grid;place-items:center;
+    box-shadow:0 3px 0 rgba(0,0,0,.15)}
+  .tarjeta-r .cont{padding:16px 18px 20px}
+  .tarjeta-r h4{font-family:Georgia,serif;font-size:19px;margin-bottom:6px}
+  .tarjeta-r p{font-size:14px;color:var(--tinta-suave)}
+  .carru-hint{display:none;text-align:center;font-size:12.5px;color:var(--tinta-suave);margin-top:2px;letter-spacing:.3px}
+  .carru-dots{display:flex;justify-content:center;gap:7px;margin-top:14px}
+  .carru-dots i{width:8px;height:8px;border-radius:50%;background:var(--linea);transition:.25s;cursor:pointer}
+  .carru-dots i.on{background:var(--rojo);width:22px;border-radius:5px}
+  @media(min-width:760px){.tarjeta-r{flex-basis:31%}}
+  @media(max-width:759px){.carru-nav{display:none}.carru-hint{display:block}}
+  @media(max-width:680px){
+    .voz{grid-template-columns:1fr;gap:24px}
+    .voz .foto{aspect-ratio:4/3;max-width:440px;margin:0 auto;transform:rotate(-1deg)}
+    .voz .palabra::before{font-size:92px;top:-26px}
+  }
 
   /* Menú destacado */
   .menu-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:30px}
@@ -170,6 +215,30 @@
   .datos a{color:var(--rojo);font-weight:700;text-decoration:none}
   .datos .btn{width:100%;justify-content:center;margin-top:16px;font-size:15px}
 
+  /* ===== Apartado Arizona ===== */
+  .az{background:linear-gradient(135deg,#0f4d2a 0%,#0a3a20 60%,#06351b 100%);color:#fff;position:relative;overflow:hidden}
+  .az::before{content:"🌵";position:absolute;right:-10px;bottom:-18px;font-size:160px;opacity:.08;transform:rotate(-8deg);pointer-events:none}
+  .az .wrap{position:relative;z-index:1;display:grid;grid-template-columns:1.1fr .9fr;gap:30px;align-items:center;padding:46px 18px}
+  .az .badge{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:800;letter-spacing:1px;text-transform:uppercase;
+    color:#06351b;background:var(--ambar-claro);padding:7px 14px;border-radius:999px}
+  .az h2{font-size:clamp(26px,5.4vw,38px);margin:16px 0 0;color:#fff}
+  .az h2 em{font-style:normal;color:var(--ambar-claro)}
+  .az p{margin-top:12px;font-size:16px;color:rgba(255,255,255,.86);max-width:520px}
+  .az .azcta{margin-top:22px}
+  .az .azcta .btn{background:var(--ambar);color:#3a2400;box-shadow:0 6px 0 #c9871a,0 16px 26px -12px rgba(0,0,0,.55)}
+  .az .azcta .btn:active{box-shadow:0 3px 0 #c9871a}
+  .az .azcard{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);border-radius:var(--r);
+    padding:22px;backdrop-filter:blur(4px)}
+  .az .azcard .ft{display:flex;align-items:flex-start;gap:11px;padding:9px 0;font-size:14.5px}
+  .az .azcard .ft + .ft{border-top:1px dashed rgba(255,255,255,.16)}
+  .az .azcard .ft .ic{font-size:20px;flex:none}
+  .az .azcard b{color:var(--ambar-claro)}
+  @media(max-width:720px){
+    .az .wrap{grid-template-columns:1fr;gap:24px;padding:40px 18px;text-align:center}
+    .az p{margin-inline:auto}
+    .az .azcard{text-align:left}
+  }
+
   /* CTA final */
   .final{background:radial-gradient(120% 130% at 50% -20%, var(--rojo) 0%, var(--rojo-prof) 100%);
     color:#fff;text-align:center;padding:56px 18px}
@@ -199,8 +268,7 @@
     .wa-float .waico{width:28px;height:28px}}
 
   @media(max-width:640px){
-    .menu-grid,.razones,.testis,.ubic,.famosos{grid-template-columns:1fr}
-    .razones{grid-template-columns:1fr 1fr}
+    .menu-grid,.testis,.ubic,.famosos{grid-template-columns:1fr}
     .galeria{grid-template-columns:1fr 1fr}
     section.bloque{padding:42px 0}
   }
@@ -255,14 +323,47 @@
 <section class="bloque">
   <div class="wrap">
     <p class="kicker reveal">Por qué somos la parada obligada</p>
-    <h2 class="titulo reveal">Sabor casero, como en casa</h2>
-    <p class="intro reveal">Más de muchos años haciendo burritos y guisados tradicionales en el corazón de Ascensión. Aquí todo sale del comal, calientito y recién hecho.</p>
-    <div class="razones">
-      <div class="razon reveal"><div class="ic">🔥</div><h3>Directo del comal</h3><p>Recién hechas y calientitas. Las ves hacerse frente a ti.</p></div>
-      <div class="razon reveal"><div class="ic">👐</div><h3>Hechas a mano</h3><p>Tortillas y gorditas de harina amasadas al momento, no de máquina.</p></div>
-      <div class="razon reveal"><div class="ic">🥘</div><h3>Guisos con sabor</h3><p>Papa con queso, deshebrada, mole, chicharrón… como los de casa.</p></div>
-      <div class="razon reveal"><div class="ic">🚗</div><h3>Ideal para el camino</h3><p>Pide, paga y llévatelos. Perfectos para comer rumbo a los pueblos.</p></div>
+    <h2 class="titulo reveal">No es la carretera. Es el sabor.</h2>
+
+    <!-- Voz del Güero -->
+    <div class="voz">
+      <div class="palabra reveal">
+        <blockquote>No hacemos comida rápida. Hacemos comida con tiempo, con tradición y con ingredientes de verdad. Cada tortilla se prepara a mano y cada platillo sale del comal como debe ser: caliente y lleno de sabor.</blockquote>
+        <div class="firma"><span class="ln"></span><div><b>El Güero</b><br><span>Ascensión, Chihuahua · sabor de toda la vida</span></div></div>
+      </div>
+      <div class="foto reveal"><img src="img/foto1.jpg" alt="Gorditas de harina recién hechas en el comal"></div>
     </div>
+
+    <!-- Carrusel de razones -->
+    <div class="carru-head">
+      <h3 class="reveal">Lo que vas a encontrar</h3>
+      <div class="carru-nav">
+        <button type="button" data-dir="-1" aria-label="Anterior">‹</button>
+        <button type="button" data-dir="1" aria-label="Siguiente">›</button>
+      </div>
+    </div>
+    <div class="carru-wrap">
+      <div class="carru" id="carruRazones">
+        <article class="tarjeta-r reveal">
+          <div class="img"><span class="num">1</span><img src="img/foto1.jpg" alt="Gorditas doradas recién salidas del comal" loading="lazy" onerror="this.style.display='none'"></div>
+          <div class="cont"><h4>Directo del comal</h4><p>Recién hechas y calientitas. Las ves dorarse frente a ti — nada que salió de un microondas.</p></div>
+        </article>
+        <article class="tarjeta-r reveal">
+          <div class="img"><span class="num">2</span><img src="img/foto3.jpg" alt="Gorditas de harina rellenas de guiso" loading="lazy" onerror="this.style.display='none'"></div>
+          <div class="cont"><h4>Hechas a mano</h4><p>Tortillas y gorditas de harina amasadas al momento, una por una. Nada de máquina.</p></div>
+        </article>
+        <article class="tarjeta-r reveal">
+          <div class="img"><span class="num">3</span><img src="img/foto2.jpg" alt="Tacos de barbacoa con salsa, cebolla y cilantro" loading="lazy" onerror="this.style.display='none'"></div>
+          <div class="cont"><h4>Guisos con sabor</h4><p>Papa con queso, deshebrada, mole, barbacoa de labio… los de siempre, como en casa.</p></div>
+        </article>
+        <article class="tarjeta-r reveal">
+          <div class="img"><span class="num">4</span><img src="img/foto5.jpg" alt="Torta recién hecha, lista para llevar" loading="lazy" onerror="this.style.display='none'"></div>
+          <div class="cont"><h4>Listo para el camino</h4><p>Pide, paga y llévatelos. Perfectos para seguir tu viaje sin perder tiempo.</p></div>
+        </article>
+      </div>
+    </div>
+    <p class="carru-hint reveal">← desliza para ver más →</p>
+    <div class="carru-dots" id="carruDots"></div>
   </div>
 </section>
 
@@ -381,6 +482,26 @@
   </div>
 </section>
 
+<!-- ===================== APARTADO ARIZONA ===================== -->
+<section class="az">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="badge">🌵 Nuevo · Phoenix, Arizona 🇺🇸</span>
+      <h2>¿Estás en <em>Arizona</em>? El sabor del Güero va para allá.</h2>
+      <p>Estamos llevando las charolas del Güero a Phoenix para tus fiestas, los fines de semana. La misma receta de Ascensión, con el permiso de mi apá. Apártate en la lista y sé de los primeros (con promo de arranque).</p>
+      <div class="azcta">
+        <a class="btn" href="arizona.html">📋 Apártate en la lista →</a>
+      </div>
+    </div>
+    <div class="azcard reveal">
+      <div class="ft"><span class="ic">🐐</span><div>Charolas de <b>barbacoa</b>, gorditas y burritos para tu fiesta</div></div>
+      <div class="ft"><span class="ic">📅</span><div>Fines de semana · <b>viernes a domingo</b></div></div>
+      <div class="ft"><span class="ic">🚗</span><div>Recoges o <b>te la llevamos</b> en el área de Phoenix</div></div>
+      <div class="ft"><span class="ic">⭐</span><div>El respaldo de <b>4.4★ y 420+ reseñas</b> del original en México</div></div>
+    </div>
+  </div>
+</section>
+
 <!-- ===================== CTA FINAL ===================== -->
 <section class="final">
   <h2>¿Vas de paso? No te quedes con el antojo.</h2>
@@ -455,6 +576,55 @@
   check();
   /* red de seguridad: revela todo pase lo que pase */
   setTimeout(function(){els.forEach(show);},2500);
+})();
+/* Carrusel de razones: flechas + puntos + swipe nativo */
+(function(){
+  var car=document.getElementById('carruRazones');if(!car)return;
+  var cards=[].slice.call(car.children);
+  var dotsWrap=document.getElementById('carruDots');
+  var navBtns=[].slice.call(document.querySelectorAll('.carru-nav button'));
+  cards.forEach(function(_,i){
+    var d=document.createElement('i');
+    d.addEventListener('click',function(){
+      car.scrollTo({left:cards[i].offsetLeft-car.offsetLeft,behavior:'smooth'});});
+    dotsWrap.appendChild(d);
+  });
+  var dots=[].slice.call(dotsWrap.children);
+  function active(){
+    var c=car.scrollLeft+car.clientWidth/2,idx=0,best=1e9;
+    cards.forEach(function(el,i){
+      var mid=el.offsetLeft-car.offsetLeft+el.offsetWidth/2,d=Math.abs(mid-c);
+      if(d<best){best=d;idx=i;}});
+    dots.forEach(function(d,i){d.classList.toggle('on',i===idx);});
+    if(navBtns.length){
+      navBtns[0].disabled=car.scrollLeft<5;
+      navBtns[1].disabled=car.scrollLeft+car.clientWidth>=car.scrollWidth-5;}
+  }
+  navBtns.forEach(function(b){b.addEventListener('click',function(){
+    var w=cards[0].offsetWidth+16;car.scrollBy({left:(+b.dataset.dir)*w,behavior:'smooth'});
+    hold();});});
+  var raf;car.addEventListener('scroll',function(){
+    cancelAnimationFrame(raf);raf=requestAnimationFrame(active);},{passive:true});
+  window.addEventListener('resize',active);active();
+
+  /* Auto-avance: se mueve solo, pero se pausa al interactuar */
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var timer=null,paused=false,holdT;
+  function step(){
+    if(paused||document.hidden)return;
+    var atEnd=car.scrollLeft+car.clientWidth>=car.scrollWidth-5;
+    if(atEnd){car.scrollTo({left:0,behavior:'smooth'});}
+    else{var w=cards[0].offsetWidth+16;car.scrollBy({left:w,behavior:'smooth'});}
+  }
+  function hold(){paused=true;clearTimeout(holdT);holdT=setTimeout(function(){paused=false;},5000);}
+  if(!reduce){
+    ['mouseenter','touchstart','pointerdown'].forEach(function(ev){
+      car.addEventListener(ev,function(){paused=true;},{passive:true});});
+    ['mouseleave','touchend'].forEach(function(ev){
+      car.addEventListener(ev,function(){hold();},{passive:true});});
+    document.addEventListener('visibilitychange',active);
+    timer=setInterval(step,3800);
+  }
 })();
 </script>
 <!-- Pixel Guard — Lead Firewall by Vista Growth Agency -->

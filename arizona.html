@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>El Sabor del Güero · Phoenix, Arizona — Lista de espera</title>
+<meta name="description" content="El sabor del Güero, famoso en Ascensión Chihuahua, llega a Phoenix. Charolas para tus fiestas los fines de semana. Apártate en la lista y sé de los primeros.">
+<script>document.documentElement.className+=' js';</script>
+<style>
+  :root{
+    --rojo:#be2c2c; --rojo-osc:#8f1f1f; --rojo-prof:#5e1212;
+    --ambar:#f4a81d; --ambar-claro:#fbc85a; --durazno:#fbd9ae;
+    --crema:#fff7e8; --crema-2:#fbf3e4; --blanco:#fffdf8;
+    --tinta:#2b1a12; --tinta-suave:#7a6a5e; --linea:#ebdcc0;
+    --verde:#3e7c4f; --verde-osc:#06351b; --wa:#25d366;
+    --arena:#e8b85f;
+    --sombra:0 1px 0 rgba(0,0,0,.03), 0 14px 30px -16px rgba(60,30,10,.4);
+    --sombra-card:0 2px 0 rgba(0,0,0,.04), 0 18px 40px -22px rgba(60,30,10,.5);
+    --r:18px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  body{font-family:"Segoe UI",ui-rounded,-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+    background:var(--crema);color:var(--tinta);line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  h1,h2,h3{font-family:Georgia,"Times New Roman",serif;line-height:1.14;letter-spacing:-.01em}
+  img{display:block;max-width:100%}
+  a{color:inherit}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 18px}
+  .center{text-align:center}
+  html.js .reveal:not(.in){opacity:0;transform:translateY(18px)}
+  .reveal{transition:opacity .6s ease, transform .6s ease}
+
+  /* papel picado */
+  .papel{display:flex;height:20px;overflow:hidden}
+  .papel span{flex:1 0 5%;height:100%;clip-path:polygon(0 0,100% 0,50% 100%)}
+  .papel span:nth-child(4n+1){background:var(--rojo)}
+  .papel span:nth-child(4n+2){background:var(--ambar)}
+  .papel span:nth-child(4n+3){background:var(--verde)}
+  .papel span:nth-child(4n+4){background:#d96a8e}
+
+  /* top */
+  .top{position:sticky;top:0;z-index:60;background:rgba(255,247,232,.92);
+    backdrop-filter:blur(8px);border-bottom:1px solid var(--linea)}
+  .top .wrap{display:flex;align-items:center;gap:12px;height:58px}
+  .brand{display:flex;align-items:center;gap:10px;font-family:Georgia,serif;font-weight:700;font-size:15.5px}
+  .mark{width:36px;height:36px;border-radius:50%;background:var(--ambar);color:var(--rojo);
+    display:grid;place-items:center;font:800 21px/1 Georgia,serif;box-shadow:0 3px 0 rgba(0,0,0,.15);flex:none}
+  .top .sp{flex:1}
+  .top .lnk{font-size:13px;font-weight:700;color:var(--tinta-suave);text-decoration:none}
+
+  /* HERO */
+  .hero{position:relative;color:#fff;overflow:hidden;background:var(--rojo-prof)}
+  .hero .bg{position:absolute;inset:0;z-index:0}
+  .hero .bg img{width:100%;height:100%;object-fit:cover;opacity:.9}
+  .hero .bg::after{content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg, rgba(94,18,18,.62) 0%, rgba(94,18,18,.5) 40%, rgba(94,18,18,.86) 100%)}
+  .hero .wrap{position:relative;z-index:2;padding:34px 18px 42px;text-align:center}
+  .eyebrow{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;
+    color:#06351b;background:var(--ambar-claro);padding:7px 15px;border-radius:999px;box-shadow:0 6px 18px -8px rgba(0,0,0,.5)}
+  .hero h1{font-size:clamp(32px,8vw,56px);margin:20px 0 0;text-shadow:0 2px 14px rgba(0,0,0,.45)}
+  .hero h1 em{font-style:normal;color:var(--ambar-claro)}
+  .hero .lema{max-width:600px;margin:16px auto 0;font-size:clamp(15px,4vw,18px);opacity:.95;text-shadow:0 2px 10px rgba(0,0,0,.6)}
+  .stars{display:inline-flex;align-items:center;gap:9px;margin-top:18px;background:rgba(0,0,0,.3);
+    border:1px solid rgba(255,255,255,.18);padding:8px 15px;border-radius:999px;font-size:13.5px;font-weight:600}
+  .stars b{color:var(--ambar-claro)}
+  .cta-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:26px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;font-weight:800;font-size:16px;
+    padding:15px 26px;border-radius:14px;text-decoration:none;border:none;cursor:pointer;transition:transform .12s}
+  .btn:active{transform:translateY(2px)}
+  .btn-ambar{background:var(--ambar);color:#3a2400;box-shadow:0 6px 0 #c9871a,0 16px 26px -12px rgba(0,0,0,.6)}
+  .btn-ambar:active{box-shadow:0 3px 0 #c9871a}
+  .btn-verde{background:var(--wa);color:#063;box-shadow:0 6px 0 #1a9e4b,0 16px 26px -12px rgba(0,0,0,.5)}
+  .btn-verde:active{box-shadow:0 3px 0 #1a9e4b}
+
+  /* secciones */
+  section.bloque{padding:50px 0}
+  .bloque.alt{background:var(--blanco)}
+  .kicker{font-size:13px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--rojo);text-align:center}
+  .titulo{font-size:clamp(25px,6vw,36px);text-align:center;margin:8px 0 6px}
+  .intro{max-width:620px;margin:0 auto;text-align:center;color:var(--tinta-suave);font-size:16px}
+
+  /* historia / autenticidad */
+  .hist{display:grid;grid-template-columns:1.05fr .95fr;gap:32px;align-items:center;margin-top:30px}
+  .hist .foto{position:relative;border-radius:var(--r);overflow:hidden;box-shadow:var(--sombra-card);aspect-ratio:4/5}
+  .hist .foto img{width:100%;height:100%;object-fit:cover}
+  .hist blockquote{font-family:Georgia,serif;font-size:clamp(19px,3.2vw,25px);line-height:1.36;font-style:italic;margin:0 0 6px}
+  .hist p{color:var(--tinta-suave);font-size:15.5px;margin-top:12px}
+  .sellos{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+  .sello{display:flex;align-items:center;gap:8px;background:var(--crema-2);border:1px solid var(--linea);
+    border-radius:999px;padding:8px 14px;font-size:13px;font-weight:700}
+  .sello b{color:var(--rojo)}
+
+  /* cómo será */
+  .pasos{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:30px}
+  .paso{background:var(--blanco);border:1px solid var(--linea);border-radius:var(--r);padding:22px 20px;box-shadow:var(--sombra);text-align:center}
+  .paso .ic{font-size:34px}
+  .paso h3{font-size:18px;margin:10px 0 5px}
+  .paso p{font-size:14px;color:var(--tinta-suave)}
+
+  /* menú adelanto */
+  .menu-prev{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:26px}
+  .mp{position:relative;border-radius:var(--r);overflow:hidden;aspect-ratio:4/3;box-shadow:var(--sombra-card)}
+  .mp img{width:100%;height:100%;object-fit:cover}
+  .mp .lbl{position:absolute;left:0;right:0;bottom:0;padding:26px 14px 12px;color:#fff;font-weight:800;font-size:15px;
+    background:linear-gradient(0deg,rgba(0,0,0,.72),transparent)}
+
+  /* FORM lista de espera */
+  .lista{background:radial-gradient(120% 130% at 50% -10%, var(--rojo) 0%, var(--rojo-prof) 100%);color:#fff}
+  .lista .titulo{color:#fff}
+  .lista .intro{color:rgba(255,255,255,.86)}
+  .card-form{max-width:480px;margin:26px auto 0;background:var(--blanco);color:var(--tinta);
+    border-radius:22px;padding:24px 22px 26px;box-shadow:0 30px 60px -24px rgba(0,0,0,.6)}
+  .card-form .ttl{font-family:Georgia,serif;font-size:20px;text-align:center}
+  .card-form .sub{text-align:center;color:var(--tinta-suave);font-size:13.5px;margin:4px 0 6px}
+  label.campo{display:block;margin-top:14px;font-size:13px;font-weight:700;color:var(--tinta-suave)}
+  .campo input,.campo select{width:100%;margin-top:6px;padding:13px 14px;font-size:16px;
+    border:1.5px solid var(--linea);border-radius:12px;background:#fff;color:var(--tinta)}
+  .campo input:focus,.campo select:focus{outline:none;border-color:var(--rojo)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:7px}
+  .chip{border:1.5px solid var(--linea);background:#fff;color:var(--tinta);border-radius:11px;
+    padding:9px 13px;font-size:14px;font-weight:700;cursor:pointer;transition:.15s}
+  .chip.sel{background:var(--rojo);color:#fff;border-color:var(--rojo)}
+  .btn-full{width:100%;margin-top:20px;justify-content:center;font-size:16.5px;padding:16px}
+  .mini{font-size:12px;color:var(--tinta-suave);text-align:center;margin-top:13px;line-height:1.5}
+  .privado{display:flex;gap:8px;align-items:center;justify-content:center;margin-top:10px;font-size:12px;color:var(--tinta-suave)}
+
+  footer{background:var(--verde-osc);color:#cfe6d6;text-align:center;padding:30px 18px;font-size:13px;line-height:1.7}
+  footer .mk{font-family:Georgia,serif;color:#fff;font-weight:700;font-size:17px}
+  footer a{color:#9fe0b4;text-decoration:none;font-weight:700}
+
+  .waico{width:18px;height:18px;fill:currentColor;flex:none}
+
+  @media(max-width:720px){
+    .hist{grid-template-columns:1fr;gap:22px}
+    .hist .foto{aspect-ratio:4/3;max-width:440px;margin:0 auto}
+    .pasos{grid-template-columns:1fr}
+    .menu-prev{grid-template-columns:1fr 1fr}
+  }
+</style>
+</head>
+<body>
+
+<div class="papel" aria-hidden="true">
+  <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span>
+</div>
+
+<div class="top">
+  <div class="wrap">
+    <div class="brand"><div class="mark">G</div><span>El Sabor del Güero · Arizona</span></div>
+    <div class="sp"></div>
+    <a class="lnk" href="index.html">← El negocio en México</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="bg"><img src="img/foto2.jpg" alt="Barbacoa estilo el Güero"></div>
+  <div class="wrap">
+    <span class="eyebrow">🌵 Próximamente · Phoenix, Arizona</span>
+    <h1>El sabor del Güero<br>ahora en <em>Arizona</em></h1>
+    <p class="lema">El mismo sabor que hizo famoso al Güero en Ascensión, Chihuahua — sus charolas para tus fiestas, aquí en Phoenix. La misma familia, la misma receta.</p>
+    <div class="stars">⭐ <b>4.4</b> · más de <b>420</b> reseñas en el negocio original 🇲🇽</div>
+    <div class="cta-row">
+      <a class="btn btn-ambar" href="#lista">📋 Apártate en la lista</a>
+    </div>
+  </div>
+</header>
+
+<!-- HISTORIA / AUTENTICIDAD -->
+<section class="bloque">
+  <div class="wrap">
+    <p class="kicker reveal">Esto no es un food truck cualquiera</p>
+    <h2 class="titulo reveal">El Güero ya es famoso. Solo le faltaba llegar acá.</h2>
+    <div class="hist">
+      <div class="foto reveal"><img src="img/hero.jpg" alt="Letrero del Güero en Ascensión, Chihuahua"></div>
+      <div class="reveal">
+        <blockquote>"No hacemos comida rápida. Hacemos comida con tiempo, con tradición y con ingredientes de verdad."</blockquote>
+        <p>Por años, El Güero ha sido la parada obligada en la carretera de Ascensión, Chihuahua — <b>4.4★ con más de 420 reseñas</b>, y hasta visitado por gente famosa. Su barbacoa, sus gorditas de harina hechas a mano y sus guisos son de los que te hacen regresar.</p>
+        <p>Ahora su hijo trae esa misma receta a Phoenix. <b>Con el permiso y la bendición del Güero</b> — no es una imitación, es la familia.</p>
+        <div class="sellos">
+          <div class="sello">🐐 <b>Barbacoa</b> de labio</div>
+          <div class="sello">👐 Gorditas <b>hechas a mano</b></div>
+          <div class="sello">🔥 Guisos <b>como en casa</b></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CÓMO SERÁ -->
+<section class="bloque alt">
+  <div class="wrap">
+    <p class="kicker reveal">Cómo va a funcionar</p>
+    <h2 class="titulo reveal">Charolas para tus fiestas, los fines de semana</h2>
+    <p class="intro reveal">Perfecto para reuniones, cumpleaños, carnitas del domingo o lo que se ofrezca. Tú pides con tiempo y nosotros cocinamos fresco.</p>
+    <div class="pasos">
+      <div class="paso reveal"><div class="ic">📅</div><h3>Viernes a domingo</h3><p>Cocinamos por encargo los fines de semana. Apartas con anticipación.</p></div>
+      <div class="paso reveal"><div class="ic">🥘</div><h3>Charolas a tu medida</h3><p>Barbacoa, gorditas surtidas, burritos. Para los que sean en tu fiesta.</p></div>
+      <div class="paso reveal"><div class="ic">🚗</div><h3>Recoges o te la llevamos</h3><p>Pasas por tu charola, o te la llevamos en el área de Phoenix. Tú no cocinas.</p></div>
+    </div>
+    <!-- Adelanto del menú con fotos reales -->
+    <div class="menu-prev">
+      <div class="mp reveal"><img src="img/foto2.jpg" alt="Tacos y barbacoa"><span class="lbl">🐐 Barbacoa de labio</span></div>
+      <div class="mp reveal"><img src="img/foto1.jpg" alt="Gorditas de harina"><span class="lbl">🫓 Gorditas surtidas</span></div>
+      <div class="mp reveal"><img src="img/foto3.jpg" alt="Gorditas rellenas"><span class="lbl">🌯 Burritos y más</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- LISTA DE ESPERA -->
+<section class="bloque lista" id="lista">
+  <div class="wrap">
+    <p class="kicker reveal" style="color:var(--ambar-claro)">Sé de los primeros</p>
+    <h2 class="titulo reveal">Apártate en la lista de espera</h2>
+    <p class="intro reveal">Déjanos tus datos y serás de los primeros en saber cuándo abrimos — además te avisamos de la <b>promo de arranque</b> para los primeros de la lista. Sin compromiso.</p>
+
+    <form class="card-form reveal" id="formLista">
+      <div class="ttl">🌮 Quiero mi charola del Güero</div>
+      <div class="sub">Te escribimos por WhatsApp cuando estemos listos.</div>
+
+      <label class="campo">Tu nombre
+        <input id="f_nombre" type="text" placeholder="Ej. María López" autocomplete="name">
+      </label>
+      <label class="campo">Tu WhatsApp (Arizona)
+        <input id="f_tel" type="tel" inputmode="tel" placeholder="Ej. (602) 555-1234" autocomplete="tel">
+      </label>
+
+      <label class="campo" style="margin-top:16px">¿Qué se te antoja más?</label>
+      <div class="chips" id="antojo">
+        <button type="button" class="chip" data-v="Barbacoa">🐐 Barbacoa</button>
+        <button type="button" class="chip" data-v="Gorditas">🫓 Gorditas</button>
+        <button type="button" class="chip" data-v="Burritos">🌯 Burritos</button>
+        <button type="button" class="chip" data-v="De todo">🍽️ De todo</button>
+      </div>
+
+      <label class="campo">¿Para alguna fiesta o evento? <span style="font-weight:400">(opcional)</span>
+        <input id="f_evento" type="text" placeholder="Ej. cumpleaños el próximo mes">
+      </label>
+
+      <button type="submit" class="btn btn-verde btn-full">
+        <svg class="waico" viewBox="0 0 32 32" aria-hidden="true"><path d="M16.01 3.2A12.74 12.74 0 0 0 3.2 16c0 2.26.6 4.46 1.72 6.4L3.2 28.8l6.57-1.72A12.74 12.74 0 1 0 16.01 3.2zm0 23.31a10.5 10.5 0 0 1-5.35-1.47l-.38-.23-3.9 1.02 1.04-3.8-.25-.39a10.5 10.5 0 1 1 8.84 4.84z"/><path d="M19.11 17.21c-.27-.14-1.6-.79-1.85-.88-.25-.09-.43-.14-.61.14-.18.27-.7.88-.86 1.06-.16.18-.32.2-.59.07-.27-.14-1.14-.42-2.17-1.34-.8-.72-1.34-1.6-1.5-1.87-.16-.27-.02-.42.12-.55.12-.12.27-.32.41-.48.14-.16.18-.27.27-.45.09-.18.05-.34-.02-.48-.07-.14-.61-1.47-.84-2.01-.22-.53-.44-.46-.61-.46h-.52c-.18 0-.48.07-.73.34-.25.27-.96.94-.96 2.29 0 1.35.98 2.65 1.12 2.83.14.18 1.93 2.95 4.68 4.13.65.28 1.16.45 1.56.58.66.21 1.25.18 1.72.11.52-.08 1.6-.65 1.83-1.28.23-.63.23-1.17.16-1.28-.07-.11-.25-.18-.52-.32z"/></svg>
+        Apartarme en la lista
+      </button>
+      <p class="privado">🔒 Solo lo usamos para avisarte de la apertura. Nada de spam.</p>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="mk">El Sabor del Güero · Phoenix, Arizona 🌵</div>
+  La receta de Ascensión, Chihuahua — ahora más cerca de ti.<br>
+  <a href="index.html">Conoce el negocio original en México →</a>
+  <div style="margin-top:18px;padding-top:14px;border-top:1px solid rgba(255,255,255,.12);font-size:12px;opacity:.7">
+    🛡️ Sitio protegido con <strong>Pixel Guard</strong> · Sitio web creado por <strong>Vista Growth Agency</strong>
+  </div>
+</footer>
+
+<script>
+/* ===== CONFIG (cambia solo esto) ===== */
+const CONFIG = {
+  // WhatsApp de Arizona (código de país 1 + 10 dígitos)
+  whatsapp: "16028217262",
+  negocio: "El Sabor del Güero (Arizona)",
+};
+
+/* selector de antojo */
+let antojo="";
+document.querySelectorAll("#antojo .chip").forEach(c=>{
+  c.addEventListener("click",()=>{
+    document.querySelectorAll("#antojo .chip").forEach(x=>x.classList.remove("sel"));
+    c.classList.add("sel"); antojo=c.dataset.v;
+  });
+});
+
+/* envío -> WhatsApp */
+document.getElementById("formLista").addEventListener("submit",function(e){
+  e.preventDefault();
+  const nombre=document.getElementById("f_nombre").value.trim();
+  const tel=document.getElementById("f_tel").value.trim();
+  const evento=document.getElementById("f_evento").value.trim();
+  if(!nombre || tel.replace(/\D/g,"").length<7){ alert("Pon tu nombre y un WhatsApp válido 🙂"); return; }
+  if(CONFIG.whatsapp.indexOf("X")>=0){
+    alert("⚠️ Falta poner el número de WhatsApp de Arizona en la configuración (CONFIG.whatsapp).");
+    return;
+  }
+  const msg=
+`🌵 *LISTA DE ESPERA — El Sabor del Güero*
+
+👤 ${nombre}
+📱 ${tel}${antojo?`\n🍽️ Se le antoja: ${antojo}`:""}${evento?`\n🎉 Evento: ${evento}`:""}
+
+Quiere que le avisen cuando abramos en Phoenix.`;
+  const url=`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(msg)}`;
+  window.open(url,"_blank");
+  // pantalla de gracias
+  document.getElementById("formLista").innerHTML=
+    `<div style="text-align:center;padding:14px 4px">
+       <div style="font-size:52px;line-height:1">🎉</div>
+       <div class="ttl" style="margin-top:8px">¡Ya casi! Falta enviar tu WhatsApp</div>
+       <p class="sub" style="margin-top:8px">Se abrió WhatsApp con tu mensaje <b>ya escrito</b>. Solo presiona <b>ENVIAR ➤</b> ahí para apuntarte. Si no lo envías, no quedas en la lista.</p>
+       <a class="btn btn-verde btn-full" style="margin-top:14px;text-decoration:none" href="${url}" target="_blank" rel="noopener">Abrir WhatsApp otra vez</a>
+       <p class="privado">¡Gracias, ${nombre}! Te avisamos en cuanto prendamos el comal en Phoenix. 🌮</p>
+     </div>`;
+});
+
+/* reveal al scroll */
+(function(){
+  var els=[].slice.call(document.querySelectorAll('.reveal'));
+  function show(el){el.classList.add('in');}
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(en){
+      en.forEach(function(e){if(e.isIntersecting){show(e.target);io.unobserve(e.target);}});
+    },{rootMargin:'0px 0px -8% 0px'});
+    els.forEach(function(el){io.observe(el);});
+  } else { els.forEach(show); }
+  setTimeout(function(){els.forEach(show);},2500);
+})();
+</script>
+<!-- Pixel Guard — Lead Firewall by Vista Growth Agency -->
+<script src="pixel-guard.js"></script>
+</body>
+</html>

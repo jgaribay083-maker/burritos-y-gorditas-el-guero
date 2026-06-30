@@ -106,7 +106,7 @@
   .charolas{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:22px}
   .charola{background:var(--blanco);border:1px solid var(--linea);border-radius:var(--r);overflow:hidden;box-shadow:var(--sombra-card)}
   .charola .img{position:relative;aspect-ratio:16/10;overflow:hidden}
-  .charola .img img{width:100%;height:100%;object-fit:cover}
+  .charola .img img,.charola .img video{width:100%;height:100%;object-fit:cover;display:block}
   .charola .tag{position:absolute;top:11px;left:11px;background:var(--rojo);color:#fff;font-size:11.5px;font-weight:800;padding:5px 10px;border-radius:999px}
   .charola .cont{padding:16px 17px 19px}
   .charola h3{font-size:19px}
@@ -269,7 +269,7 @@
         </div>
       </article>
       <article class="charola reveal">
-        <div class="img"><span class="tag">⭐ Las famosas</span><img src="img/foto1.jpg" alt="Gorditas de papa con queso" loading="lazy" onerror="this.style.display='none'"></div>
+        <div class="img"><span class="tag">⭐ Las famosas</span><video src="img/papasq.mp4" poster="img/papasq-poster.jpg" autoplay muted loop playsinline preload="auto"></video></div>
         <div class="cont">
           <h3>Papa con queso</h3>
           <p class="desc">Las gorditas que hicieron famoso al Güero. Doraditas del comal.</p>

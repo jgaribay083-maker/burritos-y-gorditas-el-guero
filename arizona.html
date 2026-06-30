@@ -97,12 +97,36 @@
   .paso h3{font-size:18px;margin:10px 0 5px}
   .paso p{font-size:14px;color:var(--tinta-suave)}
 
-  /* menú adelanto */
-  .menu-prev{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:26px}
-  .mp{position:relative;border-radius:var(--r);overflow:hidden;aspect-ratio:4/3;box-shadow:var(--sombra-card)}
-  .mp img{width:100%;height:100%;object-fit:cover}
-  .mp .lbl{position:absolute;left:0;right:0;bottom:0;padding:26px 14px 12px;color:#fff;font-weight:800;font-size:15px;
-    background:linear-gradient(0deg,rgba(0,0,0,.72),transparent)}
+  /* menú de charolas */
+  .tamanos{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:26px}
+  .tam{background:var(--blanco);border:1.5px solid var(--linea);border-radius:var(--r);padding:16px 24px;text-align:center;box-shadow:var(--sombra);min-width:190px}
+  .tam .t{font-family:Georgia,serif;font-size:19px;font-weight:700}
+  .tam .p{font-size:13.5px;color:var(--tinta-suave);margin-top:3px}
+  .tam b{color:var(--rojo)}
+  .charolas{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:22px}
+  .charola{background:var(--blanco);border:1px solid var(--linea);border-radius:var(--r);overflow:hidden;box-shadow:var(--sombra-card)}
+  .charola .img{position:relative;aspect-ratio:16/10;overflow:hidden}
+  .charola .img img{width:100%;height:100%;object-fit:cover}
+  .charola .tag{position:absolute;top:11px;left:11px;background:var(--rojo);color:#fff;font-size:11.5px;font-weight:800;padding:5px 10px;border-radius:999px}
+  .charola .cont{padding:16px 17px 19px}
+  .charola h3{font-size:19px}
+  .charola .desc{font-size:13.5px;color:var(--tinta-suave);margin-top:7px}
+  .charola .opc{margin-top:12px}
+  .charola .ol{font-weight:800;text-transform:uppercase;letter-spacing:.5px;font-size:10.5px;color:var(--rojo);margin:11px 0 6px}
+  .charola .ol:first-child{margin-top:0}
+  .minichips{display:flex;gap:6px;flex-wrap:wrap}
+  .minichip{background:var(--crema-2);border:1px solid var(--linea);border-radius:999px;padding:4px 10px;font-size:12px;font-weight:700;color:var(--tinta)}
+  .menu-nota{text-align:center;font-size:13px;color:var(--tinta-suave);margin-top:18px}
+  .aguas{background:var(--blanco);border:1px solid var(--linea);border-radius:var(--r);padding:26px 22px;margin-top:24px;text-align:center;box-shadow:var(--sombra-card)}
+  .aguas .em{font-size:40px;line-height:1}
+  .aguas h3{font-size:21px;margin-top:6px}
+  .aguas p{font-size:14px;color:var(--tinta-suave);margin-top:4px}
+  .aguas .sabores{display:flex;gap:9px;flex-wrap:wrap;justify-content:center;margin-top:16px}
+  .aguas .sab{border:1px solid var(--linea);border-radius:999px;padding:8px 15px;font-size:14px;font-weight:700;color:var(--tinta)}
+  .aguas .combos{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:18px}
+  .aguas .combo{font-size:13px;display:inline-flex;align-items:center;gap:6px;padding:9px 15px;border-radius:999px;font-weight:800}
+  .aguas .combo.reg{background:var(--ambar);color:#3a2400}
+  .aguas .combo.ven{background:#e7f4ec;color:#15532f;border:1px solid #bfe3cc}
 
   /* FORM lista de espera */
   .lista{background:radial-gradient(120% 130% at 50% -10%, var(--rojo) 0%, var(--rojo-prof) 100%);color:#fff}
@@ -134,7 +158,7 @@
     .hist{grid-template-columns:1fr;gap:22px}
     .hist .foto{aspect-ratio:4/3;max-width:440px;margin:0 auto}
     .pasos{grid-template-columns:1fr}
-    .menu-prev{grid-template-columns:1fr 1fr}
+    .charolas{grid-template-columns:1fr}
   }
 </style>
 </head>
@@ -200,11 +224,80 @@
       <div class="paso reveal"><div class="ic">🥘</div><h3>Charolas a tu medida</h3><p>Barbacoa, gorditas surtidas, burritos. Para los que sean en tu fiesta.</p></div>
       <div class="paso reveal"><div class="ic">🚗</div><h3>Recoges o te la llevamos</h3><p>Pasas por tu charola, o te la llevamos en el área de Phoenix. Tú no cocinas.</p></div>
     </div>
-    <!-- Adelanto del menú con fotos reales -->
-    <div class="menu-prev">
-      <div class="mp reveal"><img src="img/foto2.jpg" alt="Tacos y barbacoa"><span class="lbl">🐐 Barbacoa de labio</span></div>
-      <div class="mp reveal"><img src="img/foto1.jpg" alt="Gorditas de harina"><span class="lbl">🫓 Gorditas surtidas</span></div>
-      <div class="mp reveal"><img src="img/foto3.jpg" alt="Gorditas rellenas"><span class="lbl">🌯 Burritos y más</span></div>
+  </div>
+</section>
+
+<!-- ===================== MENÚ DE CHAROLAS ===================== -->
+<section class="bloque" id="menu">
+  <div class="wrap">
+    <p class="kicker reveal">El menú</p>
+    <h2 class="titulo reveal">Arma tu charola de gorditas</h2>
+    <p class="intro reveal">Eliges el guiso, el tamaño y con qué tortilla. Todo recién hecho para tu fiesta. <em>(Menú preliminar — iremos sumando más.)</em></p>
+
+    <!-- Tamaños -->
+    <div class="tamanos">
+      <div class="tam reveal"><div class="t">Charola chica</div><div class="p">Para <b>8 a 16</b> personas</div></div>
+      <div class="tam reveal"><div class="t">Charola grande</div><div class="p">Para <b>16 a 32</b> personas</div></div>
+    </div>
+
+    <!-- Guisos -->
+    <div class="charolas">
+      <article class="charola reveal">
+        <div class="img"><span class="tag">🔥 La de las fiestas</span><img src="img/foto2.jpg" alt="Barbacoa de labio" loading="lazy" onerror="this.style.display='none'"></div>
+        <div class="cont">
+          <h3>Barbacoa de labio</h3>
+          <p class="desc">Con su cilantro, cebolla y salsa. Tú eliges el color.</p>
+          <div class="opc">
+            <div class="ol">Salsa a elegir</div>
+            <div class="minichips"><span class="minichip">🌶️ Roja</span><span class="minichip">🌿 Verde</span></div>
+            <div class="ol">Con qué tortilla</div>
+            <div class="minichips"><span class="minichip">Maíz</span><span class="minichip">Harina</span><span class="minichip">Mixta</span></div>
+          </div>
+        </div>
+      </article>
+      <article class="charola reveal">
+        <div class="img"><span class="tag">Tradicional</span><img src="img/foto3.jpg" alt="Gorditas de deshebrada" loading="lazy" onerror="this.style.display='none'"></div>
+        <div class="cont">
+          <h3>Deshebrada</h3>
+          <p class="desc">El guiso deshebrado en chile, como el de casa. En rojo o en verde.</p>
+          <div class="opc">
+            <div class="ol">Guiso a elegir</div>
+            <div class="minichips"><span class="minichip">🌶️ En rojo</span><span class="minichip">🌿 En verde</span></div>
+            <div class="ol">Con qué tortilla</div>
+            <div class="minichips"><span class="minichip">Maíz</span><span class="minichip">Harina</span><span class="minichip">Mixta</span></div>
+          </div>
+        </div>
+      </article>
+      <article class="charola reveal">
+        <div class="img"><span class="tag">⭐ Las famosas</span><img src="img/foto1.jpg" alt="Gorditas de papa con queso" loading="lazy" onerror="this.style.display='none'"></div>
+        <div class="cont">
+          <h3>Papa con queso</h3>
+          <p class="desc">Las gorditas que hicieron famoso al Güero. Doraditas del comal.</p>
+          <div class="opc">
+            <div class="ol">Con qué tortilla</div>
+            <div class="minichips"><span class="minichip">Maíz</span><span class="minichip">Harina</span><span class="minichip">Mixta</span></div>
+          </div>
+        </div>
+      </article>
+    </div>
+    <p class="menu-nota reveal">Por ahora las charolas son de <b>gorditas</b> — los burritos vienen después. 🌯</p>
+
+    <!-- Aguas frescas -->
+    <div class="aguas reveal">
+      <div class="em">🥤</div>
+      <h3>Aguas frescas de la casa</h3>
+      <p>Hechas por mi hermana, como las de allá.</p>
+      <div class="sabores">
+        <span class="sab" style="background:#fbe4e4">🌺 Jamaica</span>
+        <span class="sab" style="background:#f3e6cf">🥛 Horchata</span>
+        <span class="sab" style="background:#fdf3c2">🍍 Piña</span>
+        <span class="sab" style="background:#fcdfe6">🍉 Sandía</span>
+        <span class="sab" style="background:#e2f3d8">🍈 Melón</span>
+      </div>
+      <div class="combos">
+        <span class="combo reg">🎁 Gratis: 1 galón en cada charola grande</span>
+        <span class="combo ven">🥤 O por galón aparte — para tu fiesta</span>
+      </div>
     </div>
   </div>
 </section>
@@ -229,10 +322,18 @@
 
       <label class="campo" style="margin-top:16px">¿Qué se te antoja más?</label>
       <div class="chips" id="antojo">
-        <button type="button" class="chip" data-v="Barbacoa">🐐 Barbacoa</button>
-        <button type="button" class="chip" data-v="Gorditas">🫓 Gorditas</button>
-        <button type="button" class="chip" data-v="Burritos">🌯 Burritos</button>
+        <button type="button" class="chip" data-v="Barbacoa de labio">🐐 Barbacoa de labio</button>
+        <button type="button" class="chip" data-v="Deshebrada">🌶️ Deshebrada</button>
+        <button type="button" class="chip" data-v="Papa con queso">⭐ Papa con queso</button>
+        <button type="button" class="chip" data-v="Aguas frescas">🥤 Aguas frescas</button>
         <button type="button" class="chip" data-v="De todo">🍽️ De todo</button>
+      </div>
+
+      <label class="campo" style="margin-top:16px">¿Qué tamaño te late?</label>
+      <div class="chips" id="tamano">
+        <button type="button" class="chip" data-v="Chica (8-16)">Chica · 8-16</button>
+        <button type="button" class="chip" data-v="Grande (16-32)">Grande · 16-32</button>
+        <button type="button" class="chip" data-v="Solo aguas frescas">Solo aguas 🥤</button>
       </div>
 
       <label class="campo">¿Para alguna fiesta o evento? <span style="font-weight:400">(opcional)</span>
@@ -265,14 +366,18 @@ const CONFIG = {
   negocio: "El Sabor del Güero (Arizona)",
 };
 
-/* selector de antojo */
-let antojo="";
-document.querySelectorAll("#antojo .chip").forEach(c=>{
-  c.addEventListener("click",()=>{
-    document.querySelectorAll("#antojo .chip").forEach(x=>x.classList.remove("sel"));
-    c.classList.add("sel"); antojo=c.dataset.v;
+/* selectores de antojo y tamaño */
+let antojo="", tamano="";
+function singleSelect(wrapSel, setter){
+  document.querySelectorAll(wrapSel+" .chip").forEach(c=>{
+    c.addEventListener("click",()=>{
+      document.querySelectorAll(wrapSel+" .chip").forEach(x=>x.classList.remove("sel"));
+      c.classList.add("sel"); setter(c.dataset.v);
+    });
   });
-});
+}
+singleSelect("#antojo", v=>antojo=v);
+singleSelect("#tamano", v=>tamano=v);
 
 /* envío -> WhatsApp */
 document.getElementById("formLista").addEventListener("submit",function(e){
@@ -289,7 +394,7 @@ document.getElementById("formLista").addEventListener("submit",function(e){
 `🌵 *LISTA DE ESPERA — El Sabor del Güero*
 
 👤 ${nombre}
-📱 ${tel}${antojo?`\n🍽️ Se le antoja: ${antojo}`:""}${evento?`\n🎉 Evento: ${evento}`:""}
+📱 ${tel}${antojo?`\n🍽️ Se le antoja: ${antojo}`:""}${tamano?`\n📏 Tamaño: ${tamano}`:""}${evento?`\n🎉 Evento: ${evento}`:""}
 
 Quiere que le avisen cuando abramos en Phoenix.`;
   const url=`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(msg)}`;

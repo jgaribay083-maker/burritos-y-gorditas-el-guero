@@ -269,7 +269,7 @@
         </div>
       </article>
       <article class="charola reveal">
-        <div class="img"><span class="tag">⭐ Las famosas</span><video src="img/papasq.mp4" poster="img/papasq-poster.jpg" autoplay muted loop playsinline preload="auto"></video></div>
+        <div class="img"><span class="tag">⭐ Las famosas</span><video class="vid-auto" src="img/papasq.mp4" poster="img/papasq-poster.jpg" muted loop playsinline webkit-playsinline preload="auto"></video></div>
         <div class="cont">
           <h3>Papa con queso</h3>
           <p class="desc">Las gorditas que hicieron famoso al Güero. Doraditas del comal.</p>
@@ -409,6 +409,33 @@ Quiere que le avisen cuando abramos en Phoenix.`;
        <p class="privado">¡Gracias, ${nombre}! Te avisamos en cuanto prendamos el comal en Phoenix. 🌮</p>
      </div>`;
 });
+
+/* Video que reproduce solo al entrar en pantalla (autoplay confiable en móvil) */
+(function(){
+  var vids=[].slice.call(document.querySelectorAll('video.vid-auto'));
+  if(!vids.length) return;
+  vids.forEach(function(v){
+    v.muted=true; v.setAttribute('muted','');
+    v.playsInline=true; v.setAttribute('playsinline',''); v.setAttribute('webkit-playsinline','');
+  });
+  function enVista(v){
+    var r=v.getBoundingClientRect(), h=window.innerHeight||document.documentElement.clientHeight;
+    return r.top < h*0.85 && r.bottom > h*0.15;
+  }
+  function check(){
+    vids.forEach(function(v){
+      if(enVista(v)){ if(v.paused){ var p=v.play(); if(p&&p.catch) p.catch(function(){}); } }
+      else if(!v.paused){ v.pause(); }
+    });
+  }
+  window.addEventListener('scroll',check,{passive:true});
+  window.addEventListener('resize',check);
+  window.addEventListener('orientationchange',check);
+  document.addEventListener('visibilitychange',check);
+  /* el primer toque/clic desbloquea reproducción en iOS modo bajo consumo */
+  ['touchstart','click'].forEach(function(ev){ window.addEventListener(ev,check,{passive:true}); });
+  check();
+})();
 
 /* reveal al scroll */
 (function(){

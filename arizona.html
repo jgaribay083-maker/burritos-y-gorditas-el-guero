@@ -117,9 +117,10 @@
   .minichips{display:flex;gap:6px;flex-wrap:wrap}
   .minichip{background:var(--crema-2);border:1px solid var(--linea);border-radius:999px;padding:4px 10px;font-size:12px;font-weight:700;color:var(--tinta)}
   .menu-nota{text-align:center;font-size:13px;color:var(--tinta-suave);margin-top:18px}
-  .aguas{background:var(--blanco);border:1px solid var(--linea);border-radius:var(--r);padding:26px 22px;margin-top:24px;text-align:center;box-shadow:var(--sombra-card)}
-  .aguas .em{font-size:40px;line-height:1}
-  .aguas h3{font-size:21px;margin-top:6px}
+  .aguas{background:var(--blanco);border:1px solid var(--linea);border-radius:var(--r);margin-top:24px;text-align:center;box-shadow:var(--sombra-card);overflow:hidden}
+  .aguas .foto-aguas{width:100%;height:auto;display:block}
+  .aguas .cont{padding:24px 22px}
+  .aguas h3{font-size:21px}
   .aguas p{font-size:14px;color:var(--tinta-suave);margin-top:4px}
   .aguas .sabores{display:flex;gap:9px;flex-wrap:wrap;justify-content:center;margin-top:16px}
   .aguas .sab{border:1px solid var(--linea);border-radius:999px;padding:8px 15px;font-size:14px;font-weight:700;color:var(--tinta)}
@@ -284,9 +285,10 @@
 
     <!-- Aguas frescas -->
     <div class="aguas reveal">
-      <div class="em">🥤</div>
-      <h3>Aguas frescas de la casa</h3>
-      <p>Hechas por mi hermana, como las de allá.</p>
+      <img class="foto-aguas" src="img/aguas-frescas.jpg" alt="Aguas frescas naturales: limón, piña, horchata y jamaica" loading="lazy">
+      <div class="cont">
+      <h3>Las hace mi hermana 💛</h3>
+      <p>Naturales y sin conservadores, como las de allá. Estos son sus sabores:</p>
       <div class="sabores">
         <span class="sab" style="background:#fbe4e4">🌺 Jamaica</span>
         <span class="sab" style="background:#f3e6cf">🥛 Horchata</span>
@@ -297,6 +299,7 @@
       <div class="combos">
         <span class="combo reg">🎁 Gratis: 1 galón en cada charola grande</span>
         <span class="combo ven">🥤 O por galón aparte — para tu fiesta</span>
+      </div>
       </div>
     </div>
   </div>
